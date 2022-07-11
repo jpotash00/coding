@@ -1,5 +1,5 @@
-#d.yopo@yahoo.com | James0
+#d.yopo@yahoo.com | James | stash0
 from django.contrib import admin
-from .models import song_Mixing
+from . models import Songs
 # Register your models here.
-admin.site.register(song_Mixing)
+admin.site.register(Songs)

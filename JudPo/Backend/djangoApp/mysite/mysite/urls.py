@@ -16,8 +16,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 urlpatterns = [
-    path('admin/', admin.site.urls),\
+    path('admin/', admin.site.urls),
     path('', include("tunebatClone.urls")),
-    path('songs/', include("tunebatClone.urls")),
-    path('tester/', include("tunebatClone.urls"))
+    path('category/', include("tunebatClone.urls")),
+    path('category/create/', include("tunebatClone.urls"))
 ]
