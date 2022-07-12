@@ -1,12 +1,9 @@
-<!-- <a href="/category">Display</a>
-
-<form method ="POST" action="/category/" id="myform" enctype="multipart/form-data">
-
-
-Song <input type="text" name="song">
-    <br/>
-        <button type="submit">Search for a Song</button>
-</form>
-</div> -->
-
+<!-- <a href="/category">Display</a> -->
 <h1>Song Created</h1>
+<form action='category/', method="POST" >  <!-- action has to be sent somewhere!-->
+    {% csrf_token %}
+    <!-- {{form}} -->
+    <input type="text" name="song" class="form" placeholder="Search a Song by an Artist">
+    <button type="submit", name="save">Search</button>
+</form>
+</div>

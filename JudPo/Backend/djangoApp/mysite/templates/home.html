@@ -2,8 +2,11 @@
     <div class="container">
         <h1>TuneBatClone</h1>
         <p class="lead"><strong></strong></p>
-        <form method="POST" action='/categorycreate'>  <!-- action has to be sent somewhere!-->
-            <input type="text" name="song" class="form" placeholder="Search for a Song">
+
+        <form action='category/', method="POST" >  <!-- action has to be sent somewhere!-->
+            {% csrf_token %}
+            <!-- {{form}} -->
+            <input type="text" name="song" class="form" placeholder="Search a Song by an Artist">
             <button type="submit", name="save">Search</button>
         </form>
     </div>
