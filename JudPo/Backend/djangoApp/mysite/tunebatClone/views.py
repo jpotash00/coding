@@ -3,6 +3,7 @@ from django.db import connection
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 import numpy as np
+from . methods import *
 
 mycursor = connection.cursor()
 # def tester(request):
@@ -49,62 +50,40 @@ def categorySearch(request):
         song_dict = {}
         dict_organizer = {}
         intArr = np.zeros(len(data)).astype('int')
+        dict_camMajor = {'C':'8B', 'Db':'3B', 'D':'10B', 'Eb':'5B', 'E':'12B', 'F':'7B', 'F#':'2B', 'G':'9B', 'Ab':'4B', 'A':'11B', 'Bb':'6B', 'B':'1B'}
+        dict_camMinor = {'C':'5A', 'Db':'12A', 'D':'7A', 'Eb':'2A', 'E':'9A', 'F':'4A', 'F#':'11A', 'G':'6A', 'Ab':'1A', 'A':'8A', 'Bb':'3A', 'B':'10A'}
+        dict_key = {0:'C', 1:'Db', 2:'D', 3:'Eb', 4:'E', 5:'F', 6:'F#', 7:'G', 8:'Ab', 9:'A', 10:'Bb', 11:'B'}
         #---->puts everything in dictionary of {word:song_id}
-        for songID in range(len(data)):
-            for word in data[songID]:
-                if ('<' in word or '>' in word):
-                    f = filter(str.isalpha, word)
-                    s = "".join(f)
-                    res_list = re.findall('[A-Z][^A-Z]*',s)
-                    data[songID] = res_list
-                else:
-                    data[songID] = data[songID][0].split()
-                for word in data[songID]:
-                    if (word in song_dict.keys()):
-                        song_dict[word].add(songID)
-                    else:
-                        song_dict[word] = set([songID])
-        #---->gets the a singular songID most related to the output from html request
-        for word in value:
-            x = list(song_dict.get(word))
-            np.add.at(intArr,x,1)
-        max_value = max(intArr)
-        indexTupGreatest = np.where(intArr == max_value) #--> get just one most likely answer
-        songIDIndexGreatest = int(indexTupGreatest[0]+1)
-        strNum = str(songIDIndexGreatest)
+        sd = dictCreator(data, song_dict)
+        #---->gets the singular songID most related to the output from html request
+        strNum = highestRankID(value,sd,intArr)
         mycursor.execute("select song_id, title, artist, bpm, camelot from songs where song_id = %s", [strNum]) 
         # res = mycursor.fetchall()
+        # for row in res:
+        #     print(row)
         #----> gets list in order of all related songID's
-        songid = -1
-        for rank in intArr:
-            songid+=1
-            if (rank > 0):
-                dict_organizer[songid+1] = rank
-        sort_dict = sorted(dict_organizer.items(),key=lambda x: x[1], reverse=True)
-        newlist = []
+        do = getSongIDList(-1,intArr,dict_organizer)
+        sort_dict = sorted(do.items(),key=lambda x: x[1], reverse=True)
+        newlist = [i[0] for i in sort_dict] 
         for i in range(len(sort_dict)):
             newlist.append(sort_dict[i][0])
             numStrKey = str(newlist[i])
             numStrVal = str(sort_dict[i][1])
             mycursor.execute("UPDATE song_copy SET ranked = %s where song_id = %s", [numStrVal,numStrKey]) #---> idea to create rank system and then delete it so I can get order by rank
         mycursor.execute("select song_id, title, artist, bpm, camelot from song_copy where ranked > 0 ORDER BY ranked DESC LIMIT 10") #(1,2,12,23,37,125) - for happy now by kygo
-        # songChoices = mycursor.fetchall()
+        # songChoices = mycursor.fetchall() #--> send this info to frontend so that I can choose which song I want to obtain a single base song
         # for row in songChoices:
         #     print(row)
         mycursor.execute("update song_copy set ranked = NULL where ranked > 0")
-    #---------
+    #--------- Pulling Info from API
+    spotCam = spotifyToCamelot(0,1,dict_camMajor,dict_camMinor, dict_key)
+    for k in spotCam:#--> only 1 value
+        mycursor.execute("select title, camelot from songs where camelot = %s", [k])
+    # x = mycursor.fetchall()
+    # for r in x:
+    #     print(r)
     # mycursor.execute("select * from songs where songs.title LIKE %s AND songs.artist LIKE %s", [("%" + t + "%"), ("%" + a + "%")])#works with remixes
-    # result = mycursor.fetchall() #if more than 1 comes up than choose 1
-    # if (len(result) == 0): #then make API call
-    #     print("doesn't exist in database")
-    # else:
-    # #     print("before")
-    #     mycursor.execute("select title, artist, bpm, camelot from songs where camelot = (select camelot from songs where title = %s) Order By (title = %s) DESC", [t,t]) #need to do a Join (set foreign key as instrumental key)
-    # #     print(">>>>>>>after")
-    #     res = mycursor.fetchall()
-    #     for row in res:
-    #         print(row)
- 
+    
     return render(request,'add.html')
 
 def categoryCreated(response):
