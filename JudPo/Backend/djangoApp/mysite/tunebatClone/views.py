@@ -3,7 +3,9 @@ from django.db import connection
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 import numpy as np
+
 from . methods import *
+from . models import *
 
 mycursor = connection.cursor()
 # def tester(request):
@@ -56,11 +58,16 @@ def categorySearch(request):
         #---->puts everything in dictionary of {word:song_id}
         sd = dictCreator(data, song_dict)
         #---->gets the singular songID most related to the output from html request
-        strNum = highestRankID(value,sd,intArr)
-        mycursor.execute("select song_id, title, artist, bpm, camelot from songs where song_id = %s", [strNum]) 
-        # res = mycursor.fetchall()
+        strNum = highestRankID1(value,sd,intArr)
+        # mycursor.execute("select song_id, title, artist, bpm, camelot from songs where song_id in %s", [strNum]) 
+        mycursor.execute("select song_id, camelot from songs where song_id in %s", [strNum])
+        res = mycursor.fetchall()
+        # print(res[0][1])
         # for row in res:
-        #     print(row)
+        #     pass
+        xyz = Songs.objects.raw("select song_id, camelot from songs where song_id in %s", [strNum]) 
+        for choice in xyz:
+            pass
         #----> gets list in order of all related songID's
         do = getSongIDList(-1,intArr,dict_organizer)
         sort_dict = sorted(do.items(),key=lambda x: x[1], reverse=True)
@@ -69,12 +76,16 @@ def categorySearch(request):
             newlist.append(sort_dict[i][0])
             numStrKey = str(newlist[i])
             numStrVal = str(sort_dict[i][1])
-            mycursor.execute("UPDATE song_copy SET ranked = %s where song_id = %s", [numStrVal,numStrKey]) #---> idea to create rank system and then delete it so I can get order by rank
-        mycursor.execute("select song_id, title, artist, bpm, camelot from song_copy where ranked > 0 ORDER BY ranked DESC LIMIT 10") #(1,2,12,23,37,125) - for happy now by kygo
-        # songChoices = mycursor.fetchall() #--> send this info to frontend so that I can choose which song I want to obtain a single base song
-        # for row in songChoices:
-        #     print(row)
-        mycursor.execute("update song_copy set ranked = NULL where ranked > 0")
+            mycursor.execute("UPDATE songs SET ranked = %s where song_id = %s", [numStrVal,numStrKey]) #---> idea to create rank system and then delete it so I can get order by rank
+        # mycursor.execute("select song_id, title, artist, bpm, camelot from song_copy where ranked > 0 ORDER BY ranked DESC LIMIT 10") #(1,2,12,23,37,125) - for happy now by kygo
+        all_results = Songs.objects.raw("select song_id, title, artist, bpm, camelot, song_key from songs where ranked > 0 ORDER BY ranked DESC LIMIT 10")
+        for f in all_results: #--> in order to pass info to html, this is the result to choose songs
+            pass
+        mycursor.execute("update songs set ranked = NULL where ranked > 0")
+        match = getHarmonicMatch(res[0][1])
+        final_rez = Songs.objects.raw("select song_id, title from songs where camelot in %s AND song_id != %s ORDER BY camelot DESC", [match,res[0][0]])
+        for finale in final_rez:
+            pass
     #--------- Pulling Info from API
     spotCam = spotifyToCamelot(0,1,dict_camMajor,dict_camMinor, dict_key)
     for k in spotCam:#--> only 1 value
@@ -84,7 +95,7 @@ def categorySearch(request):
     #     print(r)
     # mycursor.execute("select * from songs where songs.title LIKE %s AND songs.artist LIKE %s", [("%" + t + "%"), ("%" + a + "%")])#works with remixes
     
-    return render(request,'add.html')
+    return render(request,'add.html', {"final_rez": final_rez})
 
 def categoryCreated(response):
     return render(response, 'add.html')

@@ -1,0 +1,63 @@
+<!-- <a href="/category">Display</a> -->
+{% load static %}
+<link rel="stylesheet" href="{% static 'style.css' %}" />
+<form action='category/', method="POST"> 
+  {% csrf_token %}
+  <input type="text" name="song" class="form" placeholder="Search a Song by an Artist">
+   <button type="submit", name="save">Search</button>
+   </form>
+<div class="header" {{header}}>
+  Song List
+</div>
+<div class="display_table">
+    <table class='songs'>
+      {% csrf_token %}
+        <thead>
+          <tr>
+            <th>TITLE</th>
+            <th>ARTIST</th>
+            <th>GENRE</th>
+            <th>RELEASED_YEAR</th>
+            <th>SONG_KEY</th>
+            <th>BPM</th>
+            <th>CAMELOT</th>
+          </tr>
+        </thead>
+      <!-- {% for titl in xyz %}
+        <tr>
+          <td>{titl.title}}</td>
+          <td>{{titl.artist}}</td>
+          <td>{{titl.genre}}</td>
+          <td>{{titl.released_year}}</td>
+          <td>{{titl.song_key}}</td>
+          <td>{{titl.bpm}}</td>
+          <td>{{titl.camelot}}</td>
+        </tr>
+    {% endfor %} -->
+      {% for songer in final_rez %}
+          <tr>
+            <td>{{songer.title}}</td>
+            <td>{{songer.artist}}</td>
+            <td>{{songer.genre}}</td>
+            <td>{{songer.released_year}}</td>
+            <td>{{songer.song_key}}</td>
+            <td>{{songer.bpm}}</td>
+            <td>{{songer.camelot}}</td>
+          </tr>
+      {% endfor %}
+    </table>
+</div>
+  <!--End of display table-->
+<!-- <u1>
+    {% for songer in all_results %}
+    <li>{{songer.song_id}}</li>
+    <li>{{songer.title}}</li>
+    <li>{{songer.artist}}</li>
+    <li>{{songer.genre}}</li>
+    <li>{{songer.released_year}}</li>
+    <li>{{songer.song_key}}</li>
+    <li>{{songer.bpm}}</li>
+    <li>{{songer.camelot}}</li>
+    <li>{{songer.Instrumental_type}}</li>
+    {% endfor %}
+</u1> -->

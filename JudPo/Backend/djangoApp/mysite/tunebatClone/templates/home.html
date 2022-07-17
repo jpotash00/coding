@@ -6,7 +6,7 @@
         <form action='category/', method="POST" >  <!-- action has to be sent somewhere!-->
             {% csrf_token %}
             <!-- {{form}} -->
-            <input type="text" name="song" class="form" placeholder="Search a Song by an Artist">
+            <input type="text" required = "required" name="song" class="form" placeholder="Search a Song Title by an Artist or Song Title Artist">  <!-- need search info containing valid searches-->
             <button type="submit", name="save">Search</button>
         </form>
     </div>
