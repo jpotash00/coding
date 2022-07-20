@@ -55,7 +55,7 @@ def getSongIDList(songid,intArr,dict_organizer):
     for rank in intArr:
         songid+=1
         if (rank > 0):
-            dict_organizer[songid+1] = rank
+            dict_organizer[songid+1] = rank #add +1 because it's starts from 0 and our song_id's start from 1 so it will be dimensionally consistent
     return dict_organizer #added
     
 def getHarmonicMatch(song_beat): #str, will use this for final query

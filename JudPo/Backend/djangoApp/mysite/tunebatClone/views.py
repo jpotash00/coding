@@ -3,7 +3,7 @@ from django.db import connection
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 import numpy as np
-
+from . spotifyCSV import *
 from . methods import *
 from . models import *
 
@@ -30,7 +30,11 @@ mycursor = connection.cursor()
 #     return render(request,'add.html')
 
 def home(request):
-    return render(request, 'home.html')
+    # csv_data = csv.reader(open("/Users/jonathanpotash/Desktop/github_code/coding/JudPo/Backend/pySQL/spotifyMassDump.csv"))
+    # header = next(csv_data) #skip header
+    # for row in csv_data:
+    #     mycursor.execute("INSERT INTO songs(title, artist, genre, released_year, song_key, bpm, camelot, Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
+    return render(request,'home.html')
 
 def categorySearch(request):
     if (request.method == 'POST'):
@@ -45,10 +49,12 @@ def categorySearch(request):
             newstr = value.split()
             value = newstr
     #---->Initial database search to get a list of all the titles and artist as one string
-        mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")
+        mycursor.execute("select concat(title,' ',artist) AS songID FROM song_copy")
         rez = mycursor.fetchall()
         data = list(rez)
+        # print(data)
         #---->Initialized empty Data Structures
+    
         song_dict = {}
         dict_organizer = {}
         intArr = np.zeros(len(data)).astype('int')
@@ -57,7 +63,7 @@ def categorySearch(request):
         dict_key = {0:'C', 1:'Db', 2:'D', 3:'Eb', 4:'E', 5:'F', 6:'F#', 7:'G', 8:'Ab', 9:'A', 10:'Bb', 11:'B'}
         #---->puts everything in dictionary of {word:song_id}
         sd = dictCreator(data, song_dict)
-        #---->gets the singular songID most related to the output from html request
+        #---->gets list of songID's most related to the output from html input
         strNum = highestRankID1(value,sd,intArr)
         # mycursor.execute("select song_id, title, artist, bpm, camelot from songs where song_id in %s", [strNum]) 
         mycursor.execute("select song_id, camelot from songs where song_id in %s", [strNum])
@@ -65,25 +71,27 @@ def categorySearch(request):
         # print(res[0][1])
         # for row in res:
         #     pass
-        xyz = Songs.objects.raw("select song_id, camelot from songs where song_id in %s", [strNum]) 
-        for choice in xyz:
-            pass
-        #----> gets list in order of all related songID's
+    #--Not Needed Unless testing for HTML
+    # xyz = Songs.objects.raw("select * from songs where song_id in %s", [strNum]) 
+    # for choice in xyz: #---> print all songs in most desirable list purposes
+    #     pass
+    #-----
+    #----> gets list in order of all related songID's
         do = getSongIDList(-1,intArr,dict_organizer)
         sort_dict = sorted(do.items(),key=lambda x: x[1], reverse=True)
-        newlist = [i[0] for i in sort_dict] 
+        newlist = [i[0] for i in sort_dict] #inserts all songIDs (currently in order by rank) into list
         for i in range(len(sort_dict)):
-            newlist.append(sort_dict[i][0])
-            numStrKey = str(newlist[i])
-            numStrVal = str(sort_dict[i][1])
-            mycursor.execute("UPDATE songs SET ranked = %s where song_id = %s", [numStrVal,numStrKey]) #---> idea to create rank system and then delete it so I can get order by rank
-        # mycursor.execute("select song_id, title, artist, bpm, camelot from song_copy where ranked > 0 ORDER BY ranked DESC LIMIT 10") #(1,2,12,23,37,125) - for happy now by kygo
+            # newlist.append(sort_dict[i][0])
+            numStrID_key = str(newlist[i]) 
+            numStrRank_Val = str(sort_dict[i][1])
+            mycursor.execute("UPDATE songs SET ranked = %s where song_id = %s", [numStrRank_Val,numStrID_key]) #---> idea to create rank system and then delete it so I can get order by rank
         all_results = Songs.objects.raw("select song_id, title, artist, bpm, camelot, song_key from songs where ranked > 0 ORDER BY ranked DESC LIMIT 10")
         for f in all_results: #--> in order to pass info to html, this is the result to choose songs
             pass
         mycursor.execute("update songs set ranked = NULL where ranked > 0")
-        match = getHarmonicMatch(res[0][1])
-        final_rez = Songs.objects.raw("select song_id, title from songs where camelot in %s AND song_id != %s ORDER BY camelot DESC", [match,res[0][0]])
+        #--> After choosing song it will get sent down here for final query
+        match = getHarmonicMatch(res[0][1]) #-->currently choosing #1 (likliest search) song's in list's camelot 
+        final_rez = Songs.objects.raw("select song_id, title from songs where camelot in %s ORDER BY camelot DESC",[match]) #AND song_id != %s, ,res[0][0]
         for finale in final_rez:
             pass
     #--------- Pulling Info from API
@@ -95,7 +103,7 @@ def categorySearch(request):
     #     print(r)
     # mycursor.execute("select * from songs where songs.title LIKE %s AND songs.artist LIKE %s", [("%" + t + "%"), ("%" + a + "%")])#works with remixes
     
-    return render(request,'add.html', {"final_rez": final_rez})
+    return render(request,'add.html', {"final_rez": final_rez}) #***
 
 def categoryCreated(response):
     return render(response, 'add.html')
