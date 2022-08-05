@@ -132,7 +132,6 @@ client_credentials_manager = SpotifyClientCredentials(client_id=client_id,client
 
 sp = spotipy.Spotify()
 sp = spotipy.Spotify(client_credentials_manager=client_credentials_manager)
-# searchquery = title + ' ' + artist
 
 def getTracks(searchquery):
     getTrack = sp.search(q=searchquery,market=['US','FR','GB','CH','KR','DE'])
@@ -155,10 +154,6 @@ def getTracks(searchquery):
                     elif(trackID not in tracks.keys() and trackName in tracks.values()):
                         IDlist.append(trackID)
                         trackIDlist[i] = {trackID:trackName}
-                    # elif(trackID not in IDlist and trackName in tracks.values()): #need to get artists
-                    #     tracks[i] = trackName #title
-                    #     IDlist.append(trackID)
-    # zz = sp.audio_features(IDlist)
     return trackIDlist
 
 def getArtists(searchquery):
@@ -224,7 +219,6 @@ def getSong_Key(dict):
     zz = sp.audio_features(Idl)
     for i in range(len(zz)):
         fKey = int(zz[i]['key'])
-        # def getSong_Key_BPM_Camelot(fileKey, fileMode):#-->string (key, mode)
         fMode = int(zz[i]['mode'])
         z = spotifyToCamelot(fKey,fMode,dict_camMajor,dict_camMinor,dict_key)
         for val in z.values():
@@ -240,7 +234,6 @@ def getBPM(dict):
         Idl.append(y)
     zz = sp.audio_features(Idl)
     for i in range(len(zz)):
-        # bpm.append(int(round(float(zz[i]['tempo']),0)))
         bpmDict[getID[i]] = int(round(float(zz[i]['tempo']),0))
     return bpmDict
 
@@ -264,5 +257,28 @@ def getCamelot(dict):
             camDict[getID[i]] = kay
     return camDict
 
-def spotifyCompleteSearch(searchquery): #insert everything into here as a csv file
-    pass
+def SpotifytoDB(searchquery):
+    fullList = []
+    t = getTracks(searchquery)
+    a = getArtists(searchquery)
+    g = getGenreSpot(a)
+    r = getReleasedYear(searchquery)
+    sk = getSong_Key(t)
+    bp = getBPM(t)
+    cm = getCamelot(t)
+    for i in t.keys():
+        tmp_list = []
+        ti = ((list(t[i].values()))[0])
+        if ('-' in ti):
+            ti = ti.replace('- ','<') + '>'
+        tmp_list.append(ti)
+        tmp_list.append(a[i])
+        tmp_list.append(g[i])
+        tmp_list.append(r[i])
+        tmp_list.append(sk[i])
+        tmp_list.append(bp[i])
+        tmp_list.append(cm[i])
+        tmp_list.append("No")
+        fullList.append(tmp_list)
+    return fullList
+    
