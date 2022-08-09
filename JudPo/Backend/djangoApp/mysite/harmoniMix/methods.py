@@ -1,5 +1,6 @@
 import csv
 import re
+import string
 import numpy as np
 
 import sys
@@ -125,7 +126,8 @@ def spotifyToCamelot(key,mode,listMajor,listMinor, dict_key): #<int,int,dict,dic
     return true_dict
 
 #---------------SpotifySearchMethods--------------------#
-credentials = json.load(open('static/authorization.json'))
+
+# credentials = json.load(open('static/authorization.json'))
 client_id = credentials['client_id']
 client_secret = credentials['client_secret']
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id,client_secret=client_secret)
@@ -137,21 +139,50 @@ def getTracks(searchquery):
     getTrack = sp.search(q=searchquery,market=['US','FR','GB','CH','KR','DE'])
     tracks = {}
     IDlist = []
+    arter = []
     trackIDlist = {}
     rez = getTrack['tracks']['items']
     for i in range(len(rez)):
         album_type = rez[i]['album']['album_type']
         trackName = rez[i]['name']
         trackID = rez[i]['id']
-        if (album_type == 'single'): 
+        try:
+            tttt = rez[i]['artists'][1]['name']
+        except:
+            ttt = ""
+        if (album_type != 'compilation'): #test if album != 'compilation'
             if('Acoustic' not in trackName):
                 regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
                 if(regex.search(trackName) == None):
+                    resid = [ele for ele in ['Remix','Mix','Edit'] if(ele not in trackName)]
+                    if ('-' in trackName and len(resid) == 3):
+                        x = trackName.split('-')
+                        trackName = x[0].rstrip()
                     if(trackName not in tracks.values()):
                         tracks[trackID] = trackName #title
                         IDlist.append(trackID)
+                        arter.append(rez[i]['artists'][0]['name'])
+                        arty = arter[-1]
                         trackIDlist[i] = {trackID:trackName}
-                    elif(trackID not in tracks.keys() and trackName in tracks.values()):
+                    elif(trackID not in tracks.keys() and trackName in tracks.values() and arty not in arter): #need to account for artist instead of trackID
+                        IDlist.append(trackID)
+                        arter.append(rez[i]['artists'][0]['name'])
+                        trackIDlist[i] = {trackID:trackName}
+                elif('(with %s)' in trackName, [tttt]):
+                    trackName = re.sub("[\(\[].*?[\)\]]", "", trackName)
+                    if ('-' in trackName):
+                        x = trackName.split('-')
+                        trackName = x[0].rstrip() + ' -' + x[1]
+                    else:
+                        trackName = trackName.rstrip()
+                    resid = [ele for ele in ['Remix','Mix','Edit'] if(ele not in trackName)]
+                    if (' - ' in trackName and 'Live' in trackName and len(resid) == 3): #and (ele for ele: #and ele for ele in ['Remix','Mix','Edit'] if(ele not in trackName)): #all the small things
+                        x = trackName.split(' - ')
+                        trackName = x[0].rstrip()
+                    else:
+                        trackName += ' Remix'
+                    if(trackName not in tracks.values()):
+                        tracks[trackID] = trackName #title
                         IDlist.append(trackID)
                         trackIDlist[i] = {trackID:trackName}
     return trackIDlist
@@ -164,20 +195,11 @@ def getArtists(searchquery):
     getID = getTracks(searchquery)
     rez = getArtist['tracks']['items']
     for i in range(len(rez)):
-        trackName = rez[i]['name']
         namer = ""
         if (i in getID.keys()):
             count+=1
             artists.append(rez[i]['artists'])
-            for x in range(len(artists[count])):
-                name = artists[count][x]['name']
-                if (name not in trackName):
-                    if (len(artists[count]) == 1):
-                        namer = name
-                    elif (x == len(artists[0])-1):
-                        namer += name
-                    else:
-                        namer += name + ' & '
+            namer = artists[count][0]['name']
             listArtists[i] = namer 
     return listArtists
 
@@ -223,7 +245,7 @@ def getSong_Key(dict):
         z = spotifyToCamelot(fKey,fMode,dict_camMajor,dict_camMinor,dict_key)
         for val in z.values():
             keyDict[getID[i]] = val
-        return keyDict
+    return keyDict
 
 def getBPM(dict):
     bpmDict = {}
@@ -257,7 +279,7 @@ def getCamelot(dict):
             camDict[getID[i]] = kay
     return camDict
 
-def SpotifytoDB(searchquery):
+def SpotifytoDBtoCSV(searchquery):
     fullList = []
     t = getTracks(searchquery)
     a = getArtists(searchquery)
@@ -281,4 +303,21 @@ def SpotifytoDB(searchquery):
         tmp_list.append("No")
         fullList.append(tmp_list)
     return fullList
-    
+
+def songInDBAlready(DBDatalist,SpotListSearch):
+    with open('spotifyAPIDump.csv', 'w', newline = '') as csvfile:
+        # big = []
+        for i in range(len(SpotListSearch)):
+            x = (SpotListSearch[i][0] + ' ' + SpotListSearch[i][1])
+            z = string.capwords(x)
+            if (z in DBDatalist):
+                SpotListSearch.remove(SpotListSearch[i])
+                return songInDBAlready(DBDatalist,SpotListSearch)
+        writer = csv.writer(csvfile, delimiter = ',')
+        writer.writerows(SpotListSearch)
+    #------ 
+def getDBdataList(plist):
+    lll = []
+    for d in plist:
+        lll.append(string.capwords(d))
+    return lll
