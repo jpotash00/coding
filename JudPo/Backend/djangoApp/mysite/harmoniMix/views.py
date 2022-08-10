@@ -1,4 +1,5 @@
 import re
+import string
 from django.db import connection
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
@@ -30,23 +31,35 @@ mycursor = connection.cursor()
 #     return render(request,'add.html')
 
 def landing(request):
-    # csv_data = csv.reader(open("/Users/jonathanpotash/Desktop/github_code/coding/JudPo/Backend/pySQL/spotifyMassDump.csv"))
-    # header = next(csv_data) #skip header
-    # for row in csv_data:
-    #     mycursor.execute("INSERT INTO songs(title, artist, genre, released_year, song_key, bpm, camelot, Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
-    return render(request,'output.html')
+    mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")
+    rez = mycursor.fetchall()
+    pp = []
+    
+    for d in rez:
+        pp.append(list(d)[0])
+    searching = "getaway syn cole"
+    w = SpotifytoDBtoCSV(searching)
+    lip = songInDBAlready(pp,w)
+    with open("spotifyAPIDump.csv",'r') as filer:
+        if getLines(filer) == 0: #shouldn't have to worry about this
+            print("empty file, song exists in Db")
+        else:
+            csv_data = csv.reader(open("spotifyAPIDump.csv")) #/Users/jonathanpotash/Desktop/github_code/coding/JudPo/Backend/djangoApp/mysite
+            for row in csv_data:
+                mycursor.execute("INSERT INTO song_copy(title, artist, genre, released_year, song_key, bpm, camelot, Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
+    return render(request,'output1.html')
     # return render(request,'landing.html')
 
 def initialSearch(request):
     if (request.method == 'POST'):
         value=request.POST['song']
         if("by" in value):
-            value = value.title()
+            value = string.capwords(value) #value = value.title()
             newStr = value.split(" ")
             newStr.remove("By")
             value = newStr
         else:
-            value = value.title()
+            value = string.capwords(value) #value = value.title()
             newstr = value.split()
             value = newstr
     #---->Initial database search to get a list of all the titles and artist as one string
@@ -58,9 +71,11 @@ def initialSearch(request):
         song_dict = {}
         dict_organizer = {}
         intArr = np.zeros(len(data)).astype('int')
-        dict_camMajor = {'C':'8B', 'Db':'3B', 'D':'10B', 'Eb':'5B', 'E':'12B', 'F':'7B', 'F#':'2B', 'G':'9B', 'Ab':'4B', 'A':'11B', 'Bb':'6B', 'B':'1B'}
-        dict_camMinor = {'C':'5A', 'Db':'12A', 'D':'7A', 'Eb':'2A', 'E':'9A', 'F':'4A', 'F#':'11A', 'G':'6A', 'Ab':'1A', 'A':'8A', 'Bb':'3A', 'B':'10A'}
-        dict_key = {0:'C', 1:'Db', 2:'D', 3:'Eb', 4:'E', 5:'F', 6:'F#', 7:'G', 8:'Ab', 9:'A', 10:'Bb', 11:'B'}
+
+        #**** dict_camMajor = {'C':'8B', 'Db':'3B', 'D':'10B', 'Eb':'5B', 'E':'12B', 'F':'7B', 'F#':'2B', 'G':'9B', 'Ab':'4B', 'A':'11B', 'Bb':'6B', 'B':'1B'}
+        #**** dict_camMinor = {'C':'5A', 'Db':'12A', 'D':'7A', 'Eb':'2A', 'E':'9A', 'F':'4A', 'F#':'11A', 'G':'6A', 'Ab':'1A', 'A':'8A', 'Bb':'3A', 'B':'10A'}
+        #**** dict_key = {0:'C', 1:'Db', 2:'D', 3:'Eb', 4:'E', 5:'F', 6:'F#', 7:'G', 8:'Ab', 9:'A', 10:'Bb', 11:'B'}
+       
         #---->puts everything in dictionary of {word:song_id}
         sd = dictCreator(data, song_dict)
         #---->gets list of songID's most related to the output from html input
