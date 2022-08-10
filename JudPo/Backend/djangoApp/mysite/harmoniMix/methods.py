@@ -126,7 +126,6 @@ def spotifyToCamelot(key,mode,listMajor,listMinor, dict_key): #<int,int,dict,dic
     return true_dict
 
 #---------------SpotifySearchMethods--------------------#
-
 # credentials = json.load(open('static/authorization.json'))
 client_id = credentials['client_id']
 client_secret = credentials['client_secret']
@@ -306,11 +305,18 @@ def SpotifytoDBtoCSV(searchquery):
 
 def songInDBAlready(DBDatalist,SpotListSearch):
     with open('spotifyAPIDump.csv', 'w', newline = '') as csvfile:
-        # big = []
         for i in range(len(SpotListSearch)):
-            x = (SpotListSearch[i][0] + ' ' + SpotListSearch[i][1])
+            x = (SpotListSearch[i][0] + " " + SpotListSearch[i][1])
             z = string.capwords(x)
-            if (z in DBDatalist):
+            if ('’' in z):
+                word = ""
+                for le in z:
+                    if (le == '’'):
+                        word += "'"
+                    else:
+                        word += le
+            z = word
+            if (z in DBDatalist): #not working
                 SpotListSearch.remove(SpotListSearch[i])
                 return songInDBAlready(DBDatalist,SpotListSearch)
         writer = csv.writer(csvfile, delimiter = ',')
