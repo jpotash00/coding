@@ -1,6 +1,8 @@
 import csv
+import os
 import re
 import string
+from django.conf import settings
 import numpy as np
 
 import sys
@@ -12,12 +14,14 @@ def dictCreator(data,song_dict): #added
     for songID in range(len(data)):
         for word in data[songID]:
             if ('<' in word or '>' in word):
-                f = filter(str.isalpha, word)
-                s = "".join(f)
-                res_list = re.findall('[A-Z][^A-Z]*',s)
+                pattern = r'[<>]'
+                x = re.sub(pattern,'', word)
+                x = x.casefold()
+                res_list = x.split(" ")
                 data[songID] = res_list
             else:
-                data[songID] = data[songID][0].split()
+                data[songID] = word.casefold()
+                data[songID] = data[songID].split()
             for word in data[songID]:
                 if (word in song_dict.keys()):
                     song_dict[word].add(songID)
@@ -32,15 +36,10 @@ def highestRankID(value,song_dict,intArr): #added
     max_value = max(intArr)
     indexTupGreatest = np.where(intArr == max_value) #--> get just one most likely answer
     songIDIndexGreatest = int(indexTupGreatest[0]+1)
-    #numStr = str(songIDIndexGreatest) - removed
     return str(songIDIndexGreatest) #added
 
 def highestRankID1(value,song_dict,intArr):
     for word in value:
-        # if ((song_dict.get(word)) == None):
-        #     print("missing word:", word)
-        # else:
-            #///get me all the songs containing this word by artist 
         x = list(song_dict.get(word))
         np.add.at(intArr,x,1)
     max_value = max(intArr)
@@ -48,9 +47,7 @@ def highestRankID1(value,song_dict,intArr):
     ls = []
     if (len(indexTupGreatest[0]) > 1): #if ranks at multiple highest value then
         for i in range(len(indexTupGreatest[0])):
-            ls.append(str(indexTupGreatest[0][i]+1))
-        # indexTupGreatest = indexTupGreatest[0][:-1]
-        # songIDIndexGreatest = int(indexTupGreatest[0]+1)  
+            ls.append(str(indexTupGreatest[0][i]+1)) 
     else:
         songIDIndexGreatest = int(indexTupGreatest[0]+1)
         ls.append(str(songIDIndexGreatest))
@@ -83,8 +80,6 @@ def getHarmonicMatch(song_beat): #str, will use this for final query
             matching_camelots.append(str(num)+letter)
         elif (num > 12):
             matching_camelots.append(str(num % 12)+letter)
-        # elif (num < 0):
-        #     matching_camelots.append(str((abs(num))%12)+letter)
     if (cl[0] == letter): #A
         camlist = [matching_camelots[-2].replace(letter, cl[1]),matching_camelots[-1].replace(letter, cl[1])]
     else:
@@ -100,12 +95,10 @@ def spotifyToCamelot(key,mode,listMajor,listMinor, dict_key): #<int,int,dict,dic
     dict_key.get(key)
     val = dict_Cam[mode][dict_key.get(key)] #--> '12A'
     letter = val[-1]
-
     for key,value in dict_Cam[mode].items():
         if (val == value): 
             k = key #--> 'C'
-            break
-    
+            break 
     if (letter == 'B'):
         scale = 'Major'
         if 'b' in k: #--> add flat
@@ -127,6 +120,14 @@ def spotifyToCamelot(key,mode,listMajor,listMinor, dict_key): #<int,int,dict,dic
 
 #---------------SpotifySearchMethods--------------------#
 # credentials = json.load(open('static/authorization.json'))
+credentials = {"client_id": "",
+    "client_secret": ""}
+
+#------->
+# with open(os.path.join(settings.BASE_DIR, 'static/authorization.json')) as file:
+#     credentials = json.load(file)
+#------->
+
 client_id = credentials['client_id']
 client_secret = credentials['client_secret']
 client_credentials_manager = SpotifyClientCredentials(client_id=client_id,client_secret=client_secret)
@@ -307,7 +308,7 @@ def songInDBAlready(DBDatalist,SpotListSearch):
     with open('spotifyAPIDump.csv', 'w', newline = '') as csvfile:
         for i in range(len(SpotListSearch)):
             x = (SpotListSearch[i][0] + " " + SpotListSearch[i][1])
-            z = string.capwords(x)
+            z = string.capwords(x) #could keep but could change to casefold
             if ('’' in z):
                 word = ""
                 for le in z:
@@ -315,8 +316,8 @@ def songInDBAlready(DBDatalist,SpotListSearch):
                         word += "'"
                     else:
                         word += le
-            z = word
-            if (z in DBDatalist): #not working
+                z = word
+            if (z in DBDatalist):
                 SpotListSearch.remove(SpotListSearch[i])
                 return songInDBAlready(DBDatalist,SpotListSearch)
         writer = csv.writer(csvfile, delimiter = ',')
@@ -325,5 +326,13 @@ def songInDBAlready(DBDatalist,SpotListSearch):
 def getDBdataList(plist):
     lll = []
     for d in plist:
-        lll.append(string.capwords(d))
+        lll.append(string.capwords(d)) #could keep but could change to casefold
     return lll
+
+#-----views filechecker
+
+def getLines(filer):
+    lineNum = 0
+    for lines in filer:
+        lineNum+=1
+    return lineNum 
