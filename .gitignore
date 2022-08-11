@@ -4,4 +4,5 @@ settings.py
 authorization.py
 *.pyc
 __pycache__
+__init__.py
 JudPo/Backend/pySQL/.DS_Store
