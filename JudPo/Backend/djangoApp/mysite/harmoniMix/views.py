@@ -31,22 +31,22 @@ mycursor = connection.cursor()
 #     return render(request,'add.html')
 
 def landing(request):
-    mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")
-    rez = mycursor.fetchall()
-    pp = []
+    # mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")
+    # rez = mycursor.fetchall()
+    # pp = []
     
-    for d in rez:
-        pp.append(list(d)[0])
-    searching = "getaway syn cole"
-    w = SpotifytoDBtoCSV(searching)
-    lip = songInDBAlready(pp,w)
-    with open("spotifyAPIDump.csv",'r') as filer:
-        if getLines(filer) == 0: #shouldn't have to worry about this
-            print("empty file, song exists in Db")
-        else:
-            csv_data = csv.reader(open("spotifyAPIDump.csv")) #/Users/jonathanpotash/Desktop/github_code/coding/JudPo/Backend/djangoApp/mysite
-            for row in csv_data:
-                mycursor.execute("INSERT INTO song_copy(title, artist, genre, released_year, song_key, bpm, camelot, Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
+    # for d in rez:
+    #     pp.append(list(d)[0])
+    # searching = "getaway syn cole"
+    # w = SpotifytoDBtoCSV(searching)
+    # lip = songInDBAlready(pp,w)
+    # with open("spotifyAPIDump.csv",'r') as filer:
+    #     if getLines(filer) == 0: #shouldn't have to worry about this
+    #         print("empty file, song exists in Db")
+    #     else:
+    #         csv_data = csv.reader(open("spotifyAPIDump.csv")) #/Users/jonathanpotash/Desktop/github_code/coding/JudPo/Backend/djangoApp/mysite
+    #         for row in csv_data:
+    #             mycursor.execute("INSERT INTO song_copy(title, artist, genre, released_year, song_key, bpm, camelot, Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
     return render(request,'output1.html')
     # return render(request,'landing.html')
 
@@ -54,14 +54,15 @@ def initialSearch(request):
     if (request.method == 'POST'):
         value=request.POST['song']
         if("by" in value):
-            value = string.capwords(value) #value = value.title()
+            value = value.casefold()
             newStr = value.split(" ")
-            newStr.remove("By")
+            newStr.remove("by")
             value = newStr
         else:
-            value = string.capwords(value) #value = value.title()
+            value = value.casefold()
             newstr = value.split()
             value = newstr
+
     #---->Initial database search to get a list of all the titles and artist as one string
         mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")
         rez = mycursor.fetchall()
@@ -79,7 +80,7 @@ def initialSearch(request):
         #---->puts everything in dictionary of {word:song_id}
         sd = dictCreator(data, song_dict)
         #---->gets list of songID's most related to the output from html input
-        strNum = highestRankID1(value,sd,intArr)
+        strNum = highestRankID1(value,sd,intArr) #---> where the form data gets input
         # mycursor.execute("select song_id, title, artist, bpm, camelot from songs where song_id in %s", [strNum]) 
         mycursor.execute("select song_id, camelot from songs where song_id in %s", [strNum])
         res = mycursor.fetchall()
