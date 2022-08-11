@@ -8,6 +8,7 @@ import numpy as np
 import sys
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
+from authorization import *
 import json
 
 def dictCreator(data,song_dict): #added
@@ -119,14 +120,6 @@ def spotifyToCamelot(key,mode,listMajor,listMinor, dict_key): #<int,int,dict,dic
     return true_dict
 
 #---------------SpotifySearchMethods--------------------#
-# credentials = json.load(open('static/authorization.json'))
-credentials = {"client_id": "",
-    "client_secret": ""}
-
-#------->
-# with open(os.path.join(settings.BASE_DIR, 'static/authorization.json')) as file:
-#     credentials = json.load(file)
-#------->
 
 client_id = credentials['client_id']
 client_secret = credentials['client_secret']
