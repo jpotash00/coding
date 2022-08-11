@@ -1,5 +1,7 @@
 .DS_Store
 .vscode
 settings.py
+authorization.py
 *.pyc
 __pycache__
+JudPo/Backend/pySQL/.DS_Store
