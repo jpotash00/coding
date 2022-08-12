@@ -31,22 +31,6 @@ mycursor = connection.cursor()
 #     return render(request,'add.html')
 
 def landing(request):
-    # mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")
-    # rez = mycursor.fetchall()
-    # pp = []
-    
-    # for d in rez:
-    #     pp.append(list(d)[0])
-    # searching = "getaway syn cole"
-    # w = SpotifytoDBtoCSV(searching)
-    # lip = songInDBAlready(pp,w)
-    # with open("spotifyAPIDump.csv",'r') as filer:
-    #     if getLines(filer) == 0: #shouldn't have to worry about this
-    #         print("empty file, song exists in Db")
-    #     else:
-    #         csv_data = csv.reader(open("spotifyAPIDump.csv")) #/Users/jonathanpotash/Desktop/github_code/coding/JudPo/Backend/djangoApp/mysite
-    #         for row in csv_data:
-    #             mycursor.execute("INSERT INTO song_copy(title, artist, genre, released_year, song_key, bpm, camelot, Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
     return render(request,'output1.html')
     # return render(request,'landing.html')
 
@@ -57,16 +41,23 @@ def initialSearch(request):
             value = value.casefold()
             newStr = value.split(" ")
             newStr.remove("by")
-            value = newStr
+            value = newStr #--> for initial dict
+            newStr = ",".join(newStr)
+            searching = newStr #--->  for spotifyToCSV
         else:
             value = value.casefold()
-            newstr = value.split()
+            newstr = value.split() #--> for inital dict
+            searching = value #---> for spotifyToCSV
             value = newstr
 
     #---->Initial database search to get a list of all the titles and artist as one string
         mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")
         rez = mycursor.fetchall()
         data = list(rez)
+        #---->
+        pp = [] #---> for spotify
+        for d in rez:
+            pp.append(list(d)[0])
         #---->Initialized empty Data Structures
     
         song_dict = {}
@@ -113,6 +104,16 @@ def initialSearch(request):
         for finale in final_rez:
             pass
     #--------- Pulling Info from API
+    w = SpotifytoDBtoCSV(searching)
+    lip = songInDBAlready(pp,w)
+    with open("spotifyAPIDump.csv",'r') as filer:
+        if getLines(filer) == 0: #shouldn't have to worry about this
+            print("empty file, song exists in Db")
+        else:
+            csv_data = csv.reader(open("spotifyAPIDump.csv"))
+            for row in csv_data:
+                mycursor.execute("INSERT INTO song_copy(title, artist, genre, released_year, song_key, bpm, camelot, Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
+
     # spotCam = spotifyToCamelot(0,1,dict_camMajor,dict_camMinor, dict_key)
     # for k in spotCam:#--> only 1 value
     #     mycursor.execute("select title, camelot from songs where camelot = %s", [k])
