@@ -1,0 +1,165 @@
+
+My mix (Camelot/bpm)
+
+Create Database - song title, artist, genre, year released, key, bpm, camelot, instrumental type (yes/no)
+
+If remixed (for genre do dance/rock or country) & (for title add remixed name)
+https://ingovogelmann.net/2014/10/22/the-ultimate-harmonic-mixing-composing-chart/
+
+8A and 8B can mix, stay within same “hour” 
+Moving +-1,2 & +7
+
+
+Main songs
+1. Happy Now (Kygo) - [11B / 118]
+2. Where Are You Now (Lost Frequencies) - [11A / 121]
+3. Some Say <Felix Jaehn Remix> (Nea) - [2B / 120]
+4. Switch That (Retrovision) - [11B / 128]
+5. Our Youth (Sunny Alven) - [11A / 120]
+6. Shadows Of Love (Sam Feldt) - [7B / 120]
+7. Chasing Stars (Alesso) - [6B / 93]
+8. Anywhere With You (Afrojack) - [2B / 126]
+9. Like No Other (Jay Hardway) - [9A / 126]
+10. I’m Coming Home (Marc Robillard) - [3B / 125]
+11. Gyal You A Party Animal (Charly Black) - [8B / 134]
+12. It Ain’t Me <Tommy Jayden Remix> (Kygo) - [8B / 128]
+13. Pretty Girl <Cheat Codes Remix> (Maggie Lindemann) - [6A / 121]
+14. Catchu Catchu (Lartiste) - [4B / 116]
+15. Rich Love (One Republic) - [12A / 105]
+16. Mesibah Behayfa (The Ultras) - [3B / 95]
+17. Freaky Friday (Lil Dicky) - [4B / 133]
+18. One More Weekend (Audien) - [10B / 110]
+19. Rich Boy (Galantis) - [3B / 110]
+20. I Like Me Better <Cheat Codes Remix> (Lauv) - [11B / 105]
+21. Good Grief <Don Diablo Remix> (Bastille) - [4B / 126]
+22. Finest Hour (Cash Cash) - [4A / 96]
+23. Mama Look At Me Now (Galantis) - [6B / 126]
+24. Back And Forth (Jonas Blue) - [3A / 122]
+25. Found Me (The Him) - [9B / 117]
+26. Heavy <John Gibbons Remix> (Anne Marie) - [8B / 120]
+27. Heaven (Avicii) - [11B / 122]
+28. In Your Arms Tonite (Jonas Blue) - [10A / 125]
+29. Found The Love (Moti) - [4B / 126]
+30. I’m Not Alright (Bryce Vine) - [12B / 122]
+31. Used To Love (Martin Garrix) - [12B / 119]
+32. Faith (Galantis) - [4B / 118]
+33. Right Through (Discos Over) - [4B / 170]
+34. We Got Love (Sigala) - [8A / 125]
+35. Loco (Davai) - [2B / 106]
+36. Little Do You Know (Campsite Dream) - [8B / 95]
+37. Could You Love Me (Kygo) - [5A / 100]
+38. Next Escape (Viceroy) - [10B / 123]
+39. I Want It All (Lucas & Steve) - [3B / 120]
+40. Best Days (Sam Feldt) - [1B / 108]
+41. Summer Vibes (Razvan Mitroi) - [12B / 105] -124
+
+
+Songs to put in 
+
+1. Beautiful Day (Lee Dewyze) - [8B / 135]
+2. Iris (Goo Goo Dolls) - [10A / 156]
+3. 1-800-273-8255 (Logic) - [4A / 100] 
+4. What Lovers Do (Maroon 5) - [4A / 110]
+5. Without You (Avicii) - [10B / 134]
+6. The Middle (Zedd) - [9B / 107]
+7. Wild Love (Faul) - [5B / 100]
+8. Middle (DJ Snake) - [11B / 105]
+9. Lucid Dreams (Juice World) - [11A / 84]
+10. Back To You (Selena Gomez) - [2B / 102]
+11. Eastside (Halsey) - [11A / 89]
+12. Love Myself (Hailee Steinfeld) - [5A / 123]
+13. Heavy (Anne Marie) - [7B / 133]
+14. Smoke Clears (Andy Grammar) - [9B / 100]
+15. You Broke Me First (Tate McCrae) - [12B / 124]
+16. I Won’t Let You Walk Away (Mako) - [5B / 128]
+17. Little By Little (Ulf Nilsson) - [1B / 118]
+18. Untouchable (Tritonal) - [9B / 129]
+19. The Touch (Kolaj) - [8B / 112]
+20. Party All Night (Sean Kingston) - [5A / 124]
+21. Our Story (Mako) - [4B / 128]
+22. Where Them Girls At (David Guetta) - [5B / 130]
+23. Sexy Bitch (David Guetta) - [10A / 130]
+24. Burnin Up (Jonas Brothers) - [10B / 114]
+25. Good Girls Go Bad (Cobra Starships) - [8B / 120]
+26. It’s My Life (No Doubt) - [1A / 126]
+27. Life Is A Highway (Rascal Flats) - [7B / 103]
+28. Move Along (All American Rejects) - [5B / 110]
+29. Wonderwall (Oasis) - [10B / 174]
+30. Give It Up To Me (Sean Paul) - [4B / 96]
+31. Breakeven (The Script) - [6B / 94]
+32. Run This Town (Rihanna) - [3B / 86]
+33. Fireflies (Owl City) - [5B / 90]
+34. Good Time (Owl City) - [5B / 126]
+35. Party In The USA (Miley Cyrus) - [3A / 96]
+36. California Gurls (Katy Perry) - [8B / 125]
+37. Fuck You (Cello Green) - [8B / 127]
+38. Eenie Menie (Sean Kingston) - [3B / 121]
+39. Call Me Maybe (Carly Rae Jepsen) - [9B / 120]
+40. Tonite Tonite (Hot Chelle Rae) - [12B / 100]
+41. Somebody That I Used To Know (Gotye) - [8B / 129]
+42. Part Of Me (Katy Perry) - [7B / 130]
+43. Heart Attack (Demi Lovato) - [4B / 174]
+44. Can’t Hold Us (Macklemore) - [10B / 146]
+45. Am I Wrong (Nico & Vinz) - [4B / 120]
+46. Riptide (Vance Joy) - [3B / 102]
+47. Time Of Our Lives (Pitbull) - [3B / 124]
+48. Trumpets (Jason Derulo) - [8B / 82]
+49. All Night (Icona Pop) - [12A / 124]
+50. Yeah 3x (Chris Brown) - [10A / 130]
+51. I Choose U (Timeflies) - [12A / 128]
+52. Hall Of Fame (The Script) - [6B / 85]
+53. Turn Me On (Kevin Lyttle) - [11B / 106]
+54. Other Side (Jason Derulo) - [11B / 128]
+55. Take Me Home (Cash Cash) - [9B / 128]
+56. One Whole Day (Dixie D'Amelio) - [7B / 81]
+57. The Sweet Escape (Gwen Stefani) - [12A / 150]
+58. All Time Low (Jon Bellion) - [8B / 90]
+59. World Is Our Playground (DJ Vice) - [11A / 128]
+60. We Found Love (Rihanna) - [3B / 128]
+61. Finally Found You (Enrique Iglesias) - [11A / 128]
+62. Never Say Never (Justin Bieber) - [8B / 97]
+63. Beautiful Soul (Jesse McCartney) - [11B / 90]
+64. 22 (Taylor Swift) - [9B / 104]
+65. Wildest Dreams (Taylor Swift) - [4B / 140]
+66. All Too Well (Taylor Swift) - [8B / 93]
+67. We Are Never Getting Back Together (Taylor Swift) - [9B / 172]
+68. 1985 (Bowling For The Soup) - [12B / 120]
+69. Sugar We’re Goin' Down (Fall Out Boy) - [9B / 162]
+70. All Star (Smash Mouth) - [1B / 104]
+71. Teenage Dream (Katy Perry) - [6B / 120]
+72. TGIF (Katy Perry) - [2A / 126]
+73. Domino (Jessie J) - [9B / 127]
+74. 2002 (Anne Marie) - [12A / 96]
+75. Flashlight (Jessie J) - [7B / 148]
+76. No Tears Left To Cry (Ariana Grande) - [8A / 122]
+77. Work From Home (5th Harmony) - [4B / 105]
+78. Burn (Ellie Goulding) - [3B / 87]
+79. What Do You Mean (Justin Bieber) - [4A / 125]
+80. Ghost (Justin Bieber) - [10B / 154]
+81. Fuckin Perfect (Pink) - [9B / 92] 
+82. Good For You (Selena Gomez) - [4A / 89]
+83. Praying (Kesha) - [6B / 73]
+
+
+Best hype words
+Natalie La Rose from somebody
+Mustard on the beat
+
+
+
+Test - 
+
+Rich love (instrumental) [12A]
+
+You Broke Me First [12B]
+Eastside [11A]
+
+Wild love [5B]
+Breakeven [6B]
+
+Allstar [1B]
+
+
+
+
+
