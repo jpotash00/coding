@@ -1,8 +1,10 @@
 .DS_Store
 .vscode
+__pycache__
 settings.py
 authorization.py
 *.pyc
-__pycache__
+mysite/__pycache__
 __init__.py
-JudPo/Backend/pySQL/.DS_Store
+.cache
+Camelot-Wheel-Mixed-In-Key-Harmonic-Mixing.png
