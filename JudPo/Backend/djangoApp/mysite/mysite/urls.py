@@ -17,7 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("tunebatClone.urls")),
-    path('category/', include("tunebatClone.urls")),
-    path('category/create/', include("tunebatClone.urls"))
+    path('', include("harmoniMix.urls")), #home
+    path('songlist/', include("harmoniMix.urls")),
+    path('songlist/final/', include("harmoniMix.urls")),
+    path('category/create/', include("harmoniMix.urls"))
 ]
