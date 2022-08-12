@@ -8,7 +8,7 @@ import numpy as np
 import sys
 import spotipy
 from spotipy.oauth2 import SpotifyClientCredentials
-from authorization import *
+from . authorization import *
 import json
 
 def dictCreator(data,song_dict): #added
