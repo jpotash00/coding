@@ -1,41 +1,66 @@
-
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <title>HarmoniMix</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'custom.css' %}" />
-</head>
-<body>
-        <div class="container">
-            <div class ="landing">
-                <img class="background-image" src="https://unsplash.com/photos/ZhQCZjr9fHo/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjU4NDUzODY0&force=true" alt="LP" style="width:1400px;height:728px;"> <!---->
-                <div class="overlay">
-                    <div class="fontingHeader">
-                        <p>
-                        Harmonic Song Mixing Database and Music Finder For Your DJ Mix's,Mashup's, & Remix Desires
-                        </p>
-                    </div>
-                    <div class="fontingPara">
-                        <br>Instructions are simple
-                        <br>Search for a base song
-                        <br>Select the song
-                        <br>A list of songs from our database of 100,000+ songs
-                        <br>Will be displayed that harmonically match with your chosen base song
-                        </p>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <title>HarmoniMix</title>
+        {% load static %}
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="robots" content="all,follow">
+        <link rel="stylesheet" href="{% static 'css/oldbootstrap.min.css' %}">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Pacifico&amp;display=swap">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,700">
+        <link rel="stylesheet" href="{% static 'css/style.default.css' %}" id="theme-stylesheet">
+        <link rel="stylesheet" href="{% static 'css/custom.css' %}">
+    </head>
+    
+    <body data-new-gr-c-s-check-loaded="9.59.0" data-gr-ext-installed>
+        <section style="background: url('https://unsplash.com/photos/ZhQCZjr9fHo/download?ixid=MnwxMjA3fDB8MXxhbGx8fHx8fHx8fHwxNjU4NDUzODY0&force=true')" class="page-holder position-relative d-flex justify-content-between flex-column">
+            <div class="overlay"></div>
+            <!-- <div class="container position-relative pt-3 pb-5">
+                <ul class="list-inline text-center text-lg-right"> --> <!-- Will Add Header NavBar Here-->
+                    <!-- <li class="list-inline-item"></li> social media goes here --> 
+                <!-- </ul>
+            </div> -->
+            <div class="container text-center text-white position-relative pt-lg-5 my-5">
+                <h1 class="font-family text-shadow mb-5">
+                    Harmonic Song Mixing Database and Music Finder For DJ Mix's, Mashup's, & Remixes
+                </h1>
+            </div> 
+            <div class="container text-white position-relative text-white py-5">
+                <!-- <p class="h2 font-family-base font-weight-light text-shadow">Enter text here</p> -->
+                <div class="row">
+                    <div class="col-lg-5 mx-auto">
+                        <form class="d-flex d-inline-block w-150 flex-column flex-lg-row justify-content-center" action="song/search/" method="POST" pattern=".*S/.*">
+                            {% csrf_token %}
+                            <input class="form-control mb2 mr-sm-2 transparent-bg" id="FormInputSong" required="required" name="song" placeholder="Search For Songs" type="text">
+                                <div pseudo="placeholder"></div>
+                                <div contenteditable="plaintext-only"></div>
+                            </input>
+                            <button type="submit" class="btn btn-primary letter-spacing-3 mb-2">
+                                <span>Search</span>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </div>
-                <form action='songlist/' class="search-bar" pattern=".*/S.*" method="POST">  <!-- action has to be sent somewhere!-->
-                    {% csrf_token %}
-                    <input class="form" type="text" required="required" name="song" placeholder="Search for songs by title, artist, or by title & artist">  <!-- need search info containing valid searches-->
-                    <button class="search-btn" type="submit">
-                        <span>Search</span>
-                    </button>
-                    </form>
-                <!-- </div> -->
-            <!-- </div> -->
-        </div>
-</body>
-            <!-- <input class="form" type="text" name="song" pattern=".*/S.*" placeholder="Search for songs or artists"> -->
-        
+            <footer class="py-4 position-relative w-100 text-small">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-11 text-center text-white text-sm-center">
+                            <p>©2022 HarmoniMix</p>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </section>
+
+        <script src="{% static 'js/jquery.min.js' %}"></script>
+        <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'js/jquery.cookie.js' %}"></script>
+        <script src="{% static 'js/demo.js' %}"></script>
+
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    </body>
+</html>

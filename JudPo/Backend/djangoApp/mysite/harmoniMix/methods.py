@@ -201,7 +201,10 @@ def getGenreSpot(dict): #get artists and track first
     for k,v in dict.items():
         searchquery = v.split('&')[0].rstrip()
         getArtist = sp.search(q=searchquery,type='artist',market=['US','FR','GB','CH','KR','DE'])
-        genre = getArtist['artists']['items'][0]['genres'][0]
+        try:
+            genre = getArtist['artists']['items'][0]['genres'][0]
+        except:
+            genre = 'Pop'
         if (genre == 'complextro'):
             dictGenre[k] = 'Electro House'
         elif (genre == 'edm'):
