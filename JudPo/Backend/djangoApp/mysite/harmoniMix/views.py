@@ -31,8 +31,7 @@ mycursor = connection.cursor()
 #     return render(request,'add.html')
 
 def landing(request):
-    return render(request,'output1.html')
-    # return render(request,'landing.html')
+    return render(request,'landing.html')
 
 def initialSearch(request):
     if (request.method == 'POST'):
@@ -120,12 +119,15 @@ def initialSearch(request):
     # x = mycursor.fetchall()
     # for r in x:
     #     print(r) 
-    return render(request,'add.html', {"xyz": xyz}) #***
+    return render(request,'add1.html', {"xyz": xyz}) #***
 
     # return render(request,'add.html', {"final_rez": final_rez}) #***
 
 # def finalSearch(request):
 #     pass
 
-def categoryCreated(response):
+def about(response):
+    return render(response, 'about.html')
+
+def songInserted(response):
     return render(response, 'add.html')
