@@ -80,8 +80,8 @@ p {
     margin-bottom:1rem
 }
 .form-control.transparent-bg {
-    background: white !important;
-    color:black !important;
+    background: black !important;
+    color:white !important;
 }
 abbr[title], abbr[data-original-title] {
     text-decoration: underline;
@@ -22837,7 +22837,7 @@ a.waves-effect, a.waves-light {
 
 .btn-primary {
     color: #fff;
-    background-color:#ff3f3f !important
+    background-color:#fe0808 !important
 }
 
 .btn-primary:hover {
