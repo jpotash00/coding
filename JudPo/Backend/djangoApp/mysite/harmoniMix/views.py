@@ -9,26 +9,6 @@ from . methods import *
 from . models import *
 
 mycursor = connection.cursor()
-# def tester(request):
-#     return HttpResponse("Hello, Django!")
-#def songs(response):
-#     return HttpResponse("<h1>Good song choice!</h1>")
-# def home(request):
-#     if (request.method == 'POST'):
-#         value=request.POST['song']
-#         print(value)
-#         print("....... it works")
-#     mycursor.execute("select * from songs where title LIKE %s", [("%" + value + "%")])#works with remixes
-#     result = mycursor.fetchall()
-#     if (len(result) == 0): #then make API call
-#         pass
-#     else:
-#         mycursor.execute("select title, artist, bpm, camelot from songs where camelot = (select camelot from songs where title = %s) ORDER BY BPM DESC", value) #need to do a Join (set foreign key as instrumental key)
-#         result = mycursor.fetchall()
-#         for row in result:
-#             print(row)
- 
-#     return render(request,'add.html')
 
 def landing(request):
     return render(request,'landing.html')
@@ -58,7 +38,6 @@ def initialSearch(request):
         for d in rez:
             pp.append(list(d)[0])
         #---->Initialized empty Data Structures
-    
         song_dict = {}
         dict_organizer = {}
         intArr = np.zeros(len(data)).astype('int')
@@ -74,13 +53,22 @@ def initialSearch(request):
         # mycursor.execute("select song_id, title, artist, bpm, camelot from songs where song_id in %s", [strNum]) 
         mycursor.execute("select song_id, camelot from songs where song_id in %s", [strNum])
         res = mycursor.fetchall()
-        # print(res[0][1])
         # for row in res:
         #     pass
+        #---> print all songs in most desirable list purposes
     #--Not Needed Unless testing for HTML
-        xyz = Songs.objects.raw("select * from songs where song_id in %s", [strNum]) 
-        for choice in xyz: #---> print all songs in most desirable list purposes
-            pass
+        xyz = Songs.objects.filter(pk__in=strNum).values() #select * from songs where song_id in list(strNum)
+        deta = {0:xyz}
+        htmlDict = CombineSearch(deta)
+
+        # for choice in xyz: #---> print all songs in most desirable list purposes
+        #     pass #--> gets me the number of items 
+        # abc = Songs.objects.raw("select artist from songs where song_id in %s", [strNum]).group_by('artist')
+        # for alpha in abc:
+        #     print(alpha)
+        # abc = Songs.objects.raw("select count(title) AS counter from songs where song_id in %s group by title", [strNum])
+        # for counter in abc:
+        #    print(counter)
     #-----
     #----> gets dict in order of all related songID's by {songid:rank}
         do = getSongIDList(-1,intArr,dict_organizer)
@@ -118,8 +106,7 @@ def initialSearch(request):
     #     mycursor.execute("select title, camelot from songs where camelot = %s", [k])
     # x = mycursor.fetchall()
     # for r in x:
-    #     print(r) 
-    return render(request,'add1.html', {"xyz": xyz}) #***
+    return render(request,'add1.html', {"htmlDict":htmlDict})
 
     # return render(request,'add.html', {"final_rez": final_rez}) #***
 
@@ -130,4 +117,4 @@ def about(response):
     return render(response, 'about.html')
 
 def songInserted(response):
-    return render(response, 'add.html')
+    return render(response, '')

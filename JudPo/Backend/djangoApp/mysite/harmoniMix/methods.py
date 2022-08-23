@@ -135,6 +135,7 @@ def getTracks(searchquery):
     arter = []
     trackIDlist = {}
     rez = getTrack['tracks']['items']
+    arty = ""
     for i in range(len(rez)):
         album_type = rez[i]['album']['album_type']
         trackName = rez[i]['name']
@@ -143,7 +144,7 @@ def getTracks(searchquery):
             tttt = rez[i]['artists'][1]['name']
         except:
             ttt = ""
-        if (album_type != 'compilation'): #test if album != 'compilation'
+        if (album_type != 'compilation'):
             if('Acoustic' not in trackName):
                 regex = re.compile('[@_!#$%^&*()<>?/\|}{~:]')
                 if(regex.search(trackName) == None):
@@ -161,7 +162,7 @@ def getTracks(searchquery):
                         IDlist.append(trackID)
                         arter.append(rez[i]['artists'][0]['name'])
                         trackIDlist[i] = {trackID:trackName}
-                elif('(with %s)' in trackName, [tttt]):
+                elif('feat.' in trackName):
                     trackName = re.sub("[\(\[].*?[\)\]]", "", trackName)
                     if ('-' in trackName):
                         x = trackName.split('-')
@@ -169,17 +170,42 @@ def getTracks(searchquery):
                     else:
                         trackName = trackName.rstrip()
                     resid = [ele for ele in ['Remix','Mix','Edit'] if(ele not in trackName)]
-                    if (' - ' in trackName and 'Live' in trackName and len(resid) == 3): #and (ele for ele: #and ele for ele in ['Remix','Mix','Edit'] if(ele not in trackName)): #all the small things
-                        x = trackName.split(' - ')
-                        trackName = x[0].rstrip()
+                    if (' - ' in trackName and 'Live' in trackName):
+                        if(len(resid) == 3): #and (ele for ele: #and ele for ele in ['Remix','Mix','Edit'] if(ele not in trackName)): #all the small things
+                            x = trackName.split(' - ')
+                            trackName = x[0].rstrip()
+                        else:
+                            trackName += ' Remix'
                     else:
-                        trackName += ' Remix'
+                        if(trackName not in tracks.values()):
+                            tracks[trackID] = trackName #title
+                            IDlist.append(trackID)
+                            trackIDlist[i] = {trackID:trackName}
+                elif('with' in trackName):
+                    trackName = re.sub("[\(\[].*?[\)\]]", "", trackName)
+                    if ('-' in trackName):
+                        x = trackName.split('-')
+                        trackName = x[0].rstrip() + ' -' + x[1]
+                    else:
+                        trackName = trackName.rstrip()
+                    resid = [ele for ele in ['Remix','Mix','Edit'] if(ele not in trackName)]
+                    if (' - ' in trackName and 'Live' in trackName):
+                        if(len(resid) == 3): #and (ele for ele: #and ele for ele in ['Remix','Mix','Edit'] if(ele not in trackName)): #all the small things
+                            x = trackName.split(' - ')
+                            trackName = x[0].rstrip()
+                        else:
+                            trackName += ' Remix'
+                    else:
+                        if(trackName not in tracks.values()):
+                            tracks[trackID] = trackName #title
+                            IDlist.append(trackID)
+                            trackIDlist[i] = {trackID:trackName}
+                else:
                     if(trackName not in tracks.values()):
                         tracks[trackID] = trackName #title
                         IDlist.append(trackID)
-                        trackIDlist[i] = {trackID:trackName}
+                        trackIDlist[i] = {trackID:trackName}    
     return trackIDlist
-
 def getArtists(searchquery):
     count = -1
     artists = []
@@ -332,3 +358,81 @@ def getLines(filer):
     for lines in filer:
         lineNum+=1
     return lineNum 
+
+#----- htmlData Advanced Search Converter From DB
+
+def getDistinctArtist(dict):
+    outerList = []
+    lister = []
+    for d in dict[0]:
+        if d['artist'] not in lister:
+            lister.append(d['artist'])
+            dicter = {}
+            dicter['artist'] = d['artist']
+            outerList.append(dicter)
+    newlist = sorted(outerList, key=lambda d: d['artist']) 
+    return newlist
+
+def getDistinctBPM(dict):
+    outerList = []
+    lister = []
+    for d in dict[0]:
+        if d['bpm'] not in lister:
+            lister.append(d['bpm'])
+            dicter = {}
+            dicter['bpm'] = d['bpm']
+            outerList.append(dicter)
+    newlist = sorted(outerList, key=lambda d: d['bpm']) 
+    return newlist
+
+def getDistinctCamelot(dict):
+    outerList = []
+    lister = []
+    for d in dict[0]:
+        if d['camelot'] not in lister:
+            lister.append(d['camelot'])
+            dicter = {}
+            dicter['camelot'] = d['camelot']
+            outerList.append(dicter)
+    newlist = sorted(outerList, key=lambda d: d['camelot']) 
+    return newlist
+
+def getDistinctSongKey(dict):
+    outerList = []
+    lister = []
+    for d in dict[0]:
+        if d['song_key'] not in lister:
+            lister.append(d['song_key'])
+            dicter = {}
+            dicter['songkey'] = d['song_key']
+            outerList.append(dicter)
+    newlist = sorted(outerList, key=lambda d: d['songkey']) 
+    return newlist
+
+def getDistinctGenre(dict):
+    outerList = []
+    lister = []
+    for d in dict[0]:
+        if d['genre'] not in lister:
+            lister.append(d['genre'])
+            dicter = {}
+            dicter['genre'] = d['genre']
+            outerList.append(dicter)
+    newlist = sorted(outerList, key=lambda d: d['genre']) 
+    return newlist
+
+def CombineSearch(dict):
+    newDict = {}
+    newDict = dict
+    
+    x = dict[0]
+    newlist = sorted(x, key=lambda d: d['title'])
+    newDict[1] = newlist
+    
+    newDict[2] = getDistinctArtist(dict)
+    newDict[3] = getDistinctBPM(dict)
+    newDict[4] = getDistinctCamelot(dict)
+    newDict[5] = getDistinctSongKey(dict)
+    newDict[6] = getDistinctGenre(dict)
+    newDict[7] = {"length":len(dict[0])}
+    return newDict
