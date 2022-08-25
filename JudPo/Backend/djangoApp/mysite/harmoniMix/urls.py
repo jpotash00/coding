@@ -3,7 +3,7 @@ from . import views
 urlpatterns = [
     path('', views.landing, name='Landing'),
     path('song/search/', views.initialSearch, name='InitialSearch'),
-    # path('songlist/final/', views.finalSearch, name = 'finalSearch'),
-    path('song/insert/', views.songInserted, name='SongInserted'),
-    path('about/', views.about, name = 'About')
+    path('song/final/', views.finalSearch, name = 'FinalSearch'),
+    path('spotChecker/', views.songSpotify, name='SongSpotify'),
+    path('error/', views.error, name='Error'),
 ]

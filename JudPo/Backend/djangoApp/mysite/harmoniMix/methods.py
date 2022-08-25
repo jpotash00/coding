@@ -27,7 +27,7 @@ def dictCreator(data,song_dict): #added
                 if (word in song_dict.keys()):
                     song_dict[word].add(songID)
                 else:
-                    song_dict[word] = set([songID])
+                    song_dict[word] = set([songID])  
     return song_dict #added
     
 def highestRankID(value,song_dict,intArr): #added
@@ -40,18 +40,22 @@ def highestRankID(value,song_dict,intArr): #added
     return str(songIDIndexGreatest) #added
 
 def highestRankID1(value,song_dict,intArr):
-    for word in value:
-        x = list(song_dict.get(word))
-        np.add.at(intArr,x,1)
-    max_value = max(intArr)
-    indexTupGreatest = np.where(intArr == max_value) #--> get just one most likely answer
     ls = []
-    if (len(indexTupGreatest[0]) > 1): #if ranks at multiple highest value then
-        for i in range(len(indexTupGreatest[0])):
-            ls.append(str(indexTupGreatest[0][i]+1)) 
-    else:
-        songIDIndexGreatest = int(indexTupGreatest[0]+1)
-        ls.append(str(songIDIndexGreatest))
+    for word in value:
+        try:
+            x = list(song_dict.get(word))
+            np.add.at(intArr,x,1)
+        except:
+            pass
+    max_value = max(intArr)
+    if (max_value > 0):
+        indexTupGreatest = np.where(intArr == max_value) #--> get just one most likely answer
+        if (len(indexTupGreatest[0]) > 1): #if ranks at multiple highest value then
+            for i in range(len(indexTupGreatest[0])):
+                ls.append(str(indexTupGreatest[0][i]+1)) 
+        else:
+            songIDIndexGreatest = int(indexTupGreatest[0]+1)
+            ls.append(str(songIDIndexGreatest))
     return ls
 
 def getSongIDList(songid,intArr,dict_organizer):

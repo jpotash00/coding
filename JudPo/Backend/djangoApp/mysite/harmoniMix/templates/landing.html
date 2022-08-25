@@ -33,7 +33,7 @@
                     <div class="col-lg-5 mx-auto">
                         <form class="d-flex d-inline-block w-150 flex-column flex-lg-row justify-content-center" action="song/search/" method="POST" pattern=".*S/.*">
                             {% csrf_token %}
-                            <input class="form-control mb2 mr-sm-2 transparent-bg" id="FormInputSong" required="required" name="song" placeholder="Search For Songs" type="text">
+                            <input autocapitalize="off" autocorrect="off" class="form-control mb2 mr-sm-2 transparent-bg" id="FormInputSong" maxlength="800" spell-check="false" required="required" name="song" placeholder="Search For Songs" type="text">
                                 <div pseudo="placeholder"></div>
                                 <div contenteditable="plaintext-only"></div>
                             </input>

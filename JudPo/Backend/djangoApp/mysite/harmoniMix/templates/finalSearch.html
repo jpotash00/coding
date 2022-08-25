@@ -51,8 +51,8 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-12">
-                                <table aria-describedby="dt-filter-select_info" cellspacing="0" class="table dataTable" id="dt-filter-select" role="grid" style="width: 100%;" width="100%">
-                                    <thead>
+                                <table aria-describedby="dt-filter-select_info" cellspacing="0" class="table dataTable table-striped table-bordered" id="dt-filter-select" role="grid" style="width: 100%;" width="100%">
+                                    <thead class = thead-light>
                                     <tr role="row">
                                         <th class="th-sm sorting_asc" tabindex="0" aria-controls="dt-filter-select" rowspan="1" colspan="1" aria-sort="ascending" aria-label="Title: activate to sort column descending" style="width: 142px;">
                                             Title
@@ -79,8 +79,9 @@
                                     </thead>
                                     <tbody>
                                         {% csrf_token %}
-                                        {% for songer in htmlDict.0 %}
+                                        {% for songer in hD.0 %}
                                         <tr role="row" class="odd">
+                                        <a href='song/final/'>
                                         <td class="sorting_1">{{songer.title}}</td>
                                         <td>{{songer.artist}}</td>
                                         <td>{{songer.bpm}}</td>
@@ -88,16 +89,16 @@
                                         <td>{{songer.song_key}}</td>
                                         <td>{{songer.genre}}</td>
                                         <td>{{songer.released_year}}</td>
-                                        </tr>
-                                        {% endfor %}
+                                        </a>
+                                    </tr>
+                                    {% endfor %}
                                     </tbody>
                                     <tfoot>
                                         <tr>
                                             <th rowspan="1" colspan="1">
                                                 <select class="browser-default custom-select form-control-sm">
                                                     <option value="" selected="">Title Search</option>
-                                                    <!-- {% csrf_token %} -->
-                                                    {% for ti in htmlDict.1 %}
+                                                    {% for ti in hD.1 %}
                                                     <option value="">{{ti.title}}</option>
                                                     {% endfor %}
                                                 </select>
@@ -105,8 +106,7 @@
                                             <th rowspan="1" colspan="1">
                                                 <select class="browser-default custom-select form-control-sm">
                                                     <option value="" selected="">Artist Search</option>
-                                                    <!-- {% csrf_token %} -->
-                                                    {% for art in htmlDict.2 %}
+                                                    {% for art in hD.2 %}
                                                     <option value="">{{art.artist}}</option>
                                                     {% endfor %}
                                                 </select>
@@ -114,8 +114,7 @@
                                             <th rowspan="1" colspan="1">
                                                 <select class="browser-default custom-select form-control-sm">
                                                     <option value="" selected="">BPM Search</option>
-                                                    <!-- {% csrf_token %} -->
-                                                    {% for bp in htmlDict.3 %}
+                                                    {% for bp in hD.3 %}
                                                     <option value="">{{bp.bpm}}</option>
                                                     {% endfor %}
                                                 </select>
@@ -123,8 +122,7 @@
                                             <th rowspan="1" colspan="1">
                                                 <select class="browser-default custom-select form-control-sm">
                                                     <option value="" selected="">Camelot Search</option>
-                                                    <!-- {% csrf_token %} -->
-                                                    {% for ca in htmlDict.4 %}
+                                                    {% for ca in hD.4 %}
                                                     <option value="">{{ca.camelot}}</option>
                                                     {% endfor %}
                                                 </select>
@@ -132,8 +130,7 @@
                                             <th rowspan="1" colspan="1">
                                                 <select class="browser-default custom-select form-control-sm">
                                                     <option value="" selected="">SongKey Search</option>
-                                                    <!-- {% csrf_token %} -->
-                                                    {% for sk in htmlDict.5 %}
+                                                    {% for sk in hD.5 %}
                                                     <option value="">{{sk.songkey}}</option>
                                                     {% endfor %}
                                                 </select>
@@ -141,8 +138,7 @@
                                             <th rowspan="1" colspan="1">
                                                 <select class="browser-default custom-select form-control-sm">
                                                     <option value="" selected="">Genre Search</option>
-                                                    <!-- {% csrf_token %} -->
-                                                    {% for gen in htmlDict.6 %}
+                                                    {% for gen in hD.6 %}
                                                     <option value="">{{gen.genre}}</option>
                                                     {% endfor %}
                                                 </select>
@@ -169,7 +165,7 @@
                         <div class="row">
                             <div class="col-sm-12 col-md-5">
                                 <div class="dataTables_info" id="dt-filter-select_info" role="status" aria-live="polite">
-                                    Showing 1 to 10 of {{htmlDict.7.length}} entries <!--**NEED TO FIX THIS-->
+                                    Showing 1 to 10 of {{hD.7.length}} entries <!--**NEED TO FIX THIS-->
                                 </div>
                             </div>
                             <div class="col-sm-12 col-md-7">
@@ -203,57 +199,3 @@
         </section>
     <section>
 </html>
-<!-- <table id="dt-filter-select" class="table" cellspacing="0" width="100%">
- <table id="dt-fixed-footer" class="table" cellspacing="0" width="100%"></table> -->
-  <!--  <thead>
-      <tr>
-        <th class="th-sm">Title
-        </th>
-        <th class="th-sm">Artist
-        </th>
-        <th class="th-sm">BPM
-        </th>
-        <th class="th-sm">Camelot
-        </th>
-        <th class="th-sm">Key
-        </th>
-        <th class="th-sm">Genre
-        </th>
-        <th class="th-sm">Release Year
-        </th>
-      </tr>
-    </thead>
-    <tbody>
-        {% csrf_token %}
-        {% for songer in xyz %}
-        <tr>
-          <td>{{songer.title}}</td>
-          <td>{{songer.artist}}</td>
-          <td>{{songer.bpm}}</td>
-          <td>{{songer.camelot}}</td>
-          <td>{{songer.song_key}}</td>
-          <td>{{songer.genre}}</td>
-          <td>{{songer.released_year}}</td>
-        </tr>
-    {% endfor %}
-    </tbody>
-    <tfoot>
-      <tr>
-        <th>Title
-        </th>
-        <th>Artist
-        </th>
-        <th>Genre
-        </th>
-        <th>BPM
-        </th>
-        <th>Camelot
-        </th>
-        <th>Key
-        </th>
-        <th>Release Year
-        </th>
-      </tr>
-    </tfoot>
-    <script src="{% static 'js/adder.js' %}"></script>
-  </table> -->

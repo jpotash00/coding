@@ -1846,8 +1846,8 @@ pre code {
 }
 
 .table-hover tbody tr:hover {
-    color: #212529;
-    background-color:rgba(0, 0, 0, 0.075)
+    color: #292121;
+    background-color:rgba(0, 0, 0, 0.075);
 }
 
 .table-primary, .table-primary > th, .table-primary > td {
@@ -22748,7 +22748,7 @@ a.waves-effect, a.waves-light {
     white-space: normal;
     cursor: pointer;
     border: 0;
-    border-radius: .25rem;
+    border-radius: .125rem;
     -webkit-box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
     -webkit-transition: color .15s ease-in-out, background-color .15s ease-in-out, border-color .15s ease-in-out, -webkit-box-shadow .15s ease-in-out;

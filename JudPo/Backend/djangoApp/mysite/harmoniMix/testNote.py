@@ -4,6 +4,8 @@
 # xyz = Songs.objects.raw("select * from songs where song_id in %s", [strNum])
 
 
+#--> line 47 in views --> mycursor.execute("select song_id, title, artist, bpm, camelot from songs where song_id in %s", [strNum]) 
+
 
 
 
