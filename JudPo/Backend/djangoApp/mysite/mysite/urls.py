@@ -1,4 +1,4 @@
-"""tunebatClone URL Configuration
+"""harmoniMix URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/4.0/topics/http/urls/
@@ -18,7 +18,9 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include("harmoniMix.urls")), #home
-    path('songlist/', include("harmoniMix.urls")),
-    path('songlist/final/', include("harmoniMix.urls")),
-    path('category/create/', include("harmoniMix.urls"))
+    path('song/search/', include("harmoniMix.urls")), #first search
+    path('spotChecker/', include("harmoniMix.urls")), #result from insertion
+    path('song/final/', include("harmoniMix.urls")), #final list of songs, after click on song/insert page
+    path('error/', include("harmoniMix.urls")),
+    # path('about/', include("harmoniMix.urls")) #about section
 ]

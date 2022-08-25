@@ -83,7 +83,7 @@ def songSpotify(response):
     pp = [] #---> for spotify
     for d in rez:
         pp.append(list(d)[0])
-    w = SpotifytoDBtoCSV(searching) #---> need to send search from form here somehow???
+    w = SpotifytoDBtoCSV()#searching) #---> need to send search from form here somehow???
     songInDBAlready(pp,w)
     with open("spotifyAPIDump.csv",'r') as filer:
         if getLines(filer) == 0: #shouldn't have to worry about this
@@ -96,7 +96,7 @@ def songSpotify(response):
 
 
 def finalSearch(response):   #--> After choosing song it will get sent down here for final query
-    match = getHarmonicMatch('11B')#(element from choosen list)
+    match = getHarmonicMatch('11B')#(element from choosen list - 11B temporary)
     final_rez = Songs.objects.filter(camelot__in = match).values().order_by('camelot') #DESC, bpm DESC",[match]) #AND song_id != %s, ,res[0][0] ---> put song used as number 1 in table or remove
     de = {0:final_rez} #---> original data from DJANGO DB ORM info
     hD = CombineSearch(de)
