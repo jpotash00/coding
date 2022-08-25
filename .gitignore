@@ -1,10 +1,9 @@
 .DS_Store
 .vscode
-__pycache__
+*__pycache__
 settings.py
 authorization.py
 *.pyc
-mysite/__pycache__
-__init__.py
+*__init__.py
 .cache
 Camelot-Wheel-Mixed-In-Key-Harmonic-Mixing.png
