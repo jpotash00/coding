@@ -204,6 +204,12 @@ def getTracks(searchquery):
                             tracks[trackID] = trackName #title
                             IDlist.append(trackID)
                             trackIDlist[i] = {trackID:trackName}
+                elif('(and %s)' in trackName, [rez[i]['artists'][1]['name']]):
+                    trackName = re.sub("[\(\[].*?[\)\]]", "", trackName)
+                    trackName = trackName.rstrip()
+                    tracks[trackID] = trackName #title
+                    IDlist.append(trackID)
+                    trackIDlist[i] = {trackID:trackName}
                 else:
                     if(trackName not in tracks.values()):
                         tracks[trackID] = trackName #title
