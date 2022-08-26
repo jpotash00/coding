@@ -22,5 +22,4 @@ urlpatterns = [
     path('spotChecker/', include("harmoniMix.urls")), #result from insertion
     path('song/final/', include("harmoniMix.urls")), #final list of songs, after click on song/insert page
     path('error/', include("harmoniMix.urls")),
-    # path('about/', include("harmoniMix.urls")) #about section
 ]
