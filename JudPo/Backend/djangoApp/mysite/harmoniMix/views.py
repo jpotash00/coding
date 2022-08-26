@@ -30,51 +30,26 @@ def initialSearch(request):
             newstr = value.split() #--> for inital dict
             searching = value #---> for spotifyToCSV
             value = newstr
-
         mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")  #---->Initial database search to get a list of all the titles and artist as one string
         rez = mycursor.fetchall()
         data = list(rez)
-
         pp = [] #---> for spotify
         for d in rez:
             pp.append(list(d)[0])
-
         song_dict = {}
         dict_organizer = {}
         intArr = np.zeros(len(data)).astype('int') #initializing numpy array full of 0's of len data
-       
         sd = dictCreator(data, song_dict)  #puts everything in dictionary of {word:song_id}
         strNum = highestRankID1(value,sd,intArr) #  #---->gets list of songID's most related to the output from server-side form input not in order (unnecessart)
         if (len(strNum) == 0): #---> empty
             return render(request, 'error.html')
-        # mycursor.execute("select song_id, camelot from songs where song_id in %s", [strNum])
-        # res = mycursor.fetchall()
         do = getSongIDList(-1,intArr,dict_organizer)
         sort_dict = sorted(do.items(),key=lambda x: x[1], reverse=True)
-        newlist = [str(i[0]) for i in sort_dict] #inserts all songIDs (currently in order by rank) into list for ORM DB Search
-        # print(newlist)
+        newlist = [str(i[0]) for i in sort_dict] #inserts all songIDs (currently in order by rank) into list for ORM DB Search  
         preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(newlist)])
-        xyz = Songs.objects.filter(pk__in=newlist).values().order_by(preserved) #select * from songs where song_id in list(strNum)
-        # print(xyz)
+        xyz = Songs.objects.filter(pk__in=newlist).values().order_by(preserved)[0:10]
         deta = {0:xyz} #---> original data from DJANGO DB ORM info
         htmlDict = CombineSearch(deta) #--> list of dicts that gets passed to html on render
-        # for i in range(len(sort_dict)):
-        #     numStrID_key = str(newlist[i]) 
-        #     numStrRank_Val = str(sort_dict[i][1])
-        #     mycursor.execute("UPDATE songs SET ranked = %s where song_id = %s", [numStrRank_Val,numStrID_key]) #---> idea to create rank system and then delete it so I can get order by rank
-        
-        #not needed
-        # all_results = Songs.objects.raw("select song_id, title, artist, bpm, camelot, song_key from songs where ranked > 0 ORDER BY ranked DESC")
-        # for f in all_results: #--> in order to pass info to html, this is the result to choose songs 
-        # mycursor.execute("update songs set ranked = NULL where ranked > 0")
-
-    #--------- Pulling Info from API
-
-    # spotCam = spotifyToCamelot(0,1,dict_camMajor,dict_camMinor, dict_key)
-    # for k in spotCam:#--> only 1 value
-    #     mycursor.execute("select title, camelot from songs where camelot = %s", [k])
-    # x = mycursor.fetchall()
-    # for r in x:
     return render(request,'add.html', {"htmlDict":htmlDict})
 
 def songSpotify(response):
@@ -93,7 +68,6 @@ def songSpotify(response):
             for row in csv_data:
                 mycursor.execute("INSERT INTO song_copy(title, artist, genre, released_year, song_key, bpm, camelot, Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
     return render(response,'spotifySearch.html')
-
 
 def finalSearch(response):   #--> After choosing song it will get sent down here for final query
     match = getHarmonicMatch('11B')#(element from choosen list - 11B temporary)

@@ -36,7 +36,7 @@
                             </div>
                             <div class="col-sm-12 col-md-6">
                                 <div id="dt-filter-select_filter" class="dataTables_filter">
-                                    <form class="d-flex d-inline-block w-150 flex-column flex-lg-row justify-content-center" action="#" method="POST" pattern=".*S/.*">
+                                    <form class="d-flex d-inline-block w-150 flex-column flex-lg-row justify-content-center" action="http://127.0.0.1:8000/song/search/" method="POST" pattern=".*S/.*"> <!--href="song/search/" !-->
                                         {% csrf_token %}
                                         <input class="form-control mb2 mr-sm-2 transparent-bg" id="FormInputSong" required="required" name="song" placeholder="Search For Songs" type="text">
                                             <div pseudo="placeholder"></div>
