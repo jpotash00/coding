@@ -204,12 +204,13 @@ def getTracks(searchquery):
                             tracks[trackID] = trackName #title
                             IDlist.append(trackID)
                             trackIDlist[i] = {trackID:trackName}
-                elif('(and %s)' in trackName, [rez[i]['artists'][1]['name']]):
-                    trackName = re.sub("[\(\[].*?[\)\]]", "", trackName)
-                    trackName = trackName.rstrip()
-                    tracks[trackID] = trackName #title
-                    IDlist.append(trackID)
-                    trackIDlist[i] = {trackID:trackName}
+                elif('and' in trackName):
+                    if ('(and %s' in trackName, [rez[i]['artists'][1]['name']]):
+                        trackName = re.sub("[\(\[].*?[\)\]]", "", trackName)
+                        trackName = trackName.rstrip()
+                        tracks[trackID] = trackName #title
+                        IDlist.append(trackID)
+                        trackIDlist[i] = {trackID:trackName}
                 else:
                     if(trackName not in tracks.values()):
                         tracks[trackID] = trackName #title
@@ -240,15 +241,41 @@ def getGenreSpot(dict): #get artists and track first
         try:
             genre = getArtist['artists']['items'][0]['genres'][0]
         except:
-            genre = 'Pop'
-        if (genre == 'complextro'):
-            dictGenre[k] = 'Electro House'
-        elif (genre == 'edm'):
-            dictGenre[k] = 'EDM'
-        else:
-            dictGenre[k] = genre.title()
+            genre = 'Unknown'
+        dictGenre[k] = getSubGenre(genre)
+        # if (genre == 'complextro'):
+        #     dictGenre[k] = 'Electro House'
+        # elif (genre == 'edm'):
+        #     dictGenre[k] = 'EDM'
+        # else:
+        #     dictGenre[k] = genre.title()
     return dictGenre
-   
+
+def getSubGenre(genre):
+    EDMlist = ['edm','pop dance', 'tropical House', 'electropop', 'house', 'electro house', 'brostep', 'pop edm', 'progressive house','disco house','big room', 'electronic trap', 'deep house', 'trance', 'bass trap', 'gaming edm', 'future bass','vapor twitch', 'tech house','progressive electro house','uplifting trance', 'vapor soul', 'bass house', 'future house', 'vocal house','deep groove house', 'chillstep', 'melodic dubstep','deep tropical house', 'dubstep', 'indie electropop', 'progressive trance','gaming dubstep','sky room', 'complextro', 'electro swing', 'deep big room', 'future garage', 'filthstep', 'organic house', 'wave', 'focus beats', 'swedish tropical house', 'dutch edm', 'breakbeat', 'microhouse']
+    POPlist = ['pop', 'dance pop', 'pop rap', 'latin pop', 'post-teen pop', 'pop rock', 'soft rock', 'indie pop', 'mexican pop', 'j-pop', 'hip pop','new wave pop', 'viral pop', 'k-pop', 'art pop', 'indie poptimism', 'europop', 'social media pop', 'indie cafe pop', 'metropopolis', 'acoustic pop', 'pop r&b', 'escape room', 'sophisti-pop', 'teen pop', 'talent show']
+    ROCKlist = ['rock', 'permanent wave', 'mellow gold', 'modern rock', 'classic rock', 'soft rock', 'album rock', 'post-grunge', 'alternative-rock', 'dance rock', 'indie rock', 'new romantic', 'new wave', 'art rock', 'modern alternative rock', 'blues rock', 'heartland rock', 'metal', 'garage rock', 'roots rock', 'dance-punk', 'rock-and-roll', 'rockabilly', 'glam rock', 'southern rock', 'symphonic rock']
+    HIPHOPlist = ['hip hop', 'rap', 'melodic rap', 'pop rap', 'trap', 'southern hip hop', 'gangster rap', 'underground hip hop', 'crunk', 'atl hip hop', 'hardcore hip hop', 'east cost hip hop', 'west cost rap', 'dirty south rap', 'alternative hip hop', 'conscious hip hop', 'country rap', 'chicago rap', 'g funk', 'queens hip hop', 'christian hip hop', 'old school hip hop', 'electro', 'jazz rap', 'hyphy', 'industrial hip hop', 'bounce', 'nyc rap', 'mexican hip hop', 'cali rap', 'uk alternative hip hop', 'uk hip hop', 'spanish hip hop', 'meme rap']
+    RBlist = ['r&b', 'indie soul', 'urban contemporary', 'soul', 'alternative r&b', 'quiet storm', 'neo soul', 'disco', 'funk', 'motown', 'new jack swing', 'pop soul', 'trap soul', 'pop r&b', 'indie r&b', 'gospel r&b', 'neo r&b']
+    COUNTRYlist = ['country', 'contemporary country', 'country road', 'country rock', 'new americana', 'outlaw country', 'country rap', 'classic country pop', 'country pop', 'modern country rock', 'sertanejo', 'nashville sound', 'alternative country', 'texas country', 'country dawn', 'traditional country', 'bluegrass', 'cowboy western', 'australian country', 'honky tonk', 'country gospel']
+    FOLKlist = ['folk', 'mellow gold', 'folk rock', 'indie folk', 'traditional folk', 'freak folk', 'acoustic pop', 'modern folk rock', 'melancholia', 'american folk revival', 'contemporary folk']
+    genre = genre.lower()
+    if (genre in EDMlist):
+        return "Dance/Electronic"
+    elif (genre in POPlist):
+        return "Pop"
+    elif (genre in ROCKlist):
+        return "Rock"
+    elif (genre in HIPHOPlist):
+        return "Hip-Hop"
+    elif (genre in COUNTRYlist):
+        return "Country"
+    elif (genre in RBlist):
+        return "R&B"
+    elif (genre in FOLKlist):
+        return "Folk"
+    else:
+        return "Unknown"
 def getReleasedYear(searchquery): #gets list of release_years for each song
     getRelease = sp.search(q=searchquery,market=['US','FR','GB','CH','KR','DE'])
     releaseYear = {}

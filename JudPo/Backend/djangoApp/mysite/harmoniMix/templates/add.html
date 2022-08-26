@@ -80,20 +80,19 @@
                                     <tbody>
                                         {% csrf_token %}
                                         {% for songer in htmlDict.0 %}
-                                        <tr role="row" class="odd">
-                                        <a href='song/final/'>
-                                        <td class="sorting_1">{{songer.title}}</td>
-                                        <td>{{songer.artist}}</td>
-                                        <td>{{songer.bpm}}</td>
-                                        <td>{{songer.camelot}}</td>
-                                        <td>{{songer.song_key}}</td>
-                                        <td>{{songer.genre}}</td>
-                                        <td>{{songer.released_year}}</td>
-                                        </a>
-                                    </tr>
-                                    {% endfor %}
-                                    <td><a href='spotChecker/'>HAVEN'T FOUND THE SONG YOU'RE SEARCHING FOR - CLICK HERE!!!</a></td>
-                                    <td><a href='song/final/'>FOUND WHAT YOU'RE FOR</a></td>
+                                        <tr class="clickable-row" role="row" data-href='song/final/'>
+                                        <!-- <tr role="row" class="odd" href='song/final/'>!-->
+                                            <td class="sorting_1">{{songer.title}}</td>
+                                            <td>{{songer.artist}}</td>
+                                            <td>{{songer.bpm}}</td>
+                                            <td>{{songer.camelot}}</td>
+                                            <td>{{songer.song_key}}</td>
+                                            <td>{{songer.genre}}</td>
+                                            <td>{{songer.released_year}}</td>
+                                        </tr>
+                                        {% endfor %}
+                                        <td><a href='spotChecker/'>Haven't found what you're searching for - CLICK HERE!!!</a></td>
+                                        <td><a href='song/final/'>Found what you're looking for</a></td>
                                     </tbody>
                                     <tfoot>
                                         <tr>

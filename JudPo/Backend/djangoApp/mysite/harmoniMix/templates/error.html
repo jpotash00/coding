@@ -62,10 +62,11 @@
                 <div class="sm-pr30n pb25 content clearfix pad50 bg80">
                     <article id="post-" class="">
                     <h1 class="title">404 Search Not Found</h1>
-                    <h2>Your search doesn't exist</h2>
+                    {% csrf_token %}
+                    <h2>No results found for "{{dict.v}}"</h2>
                     <p>Please make sure your words are spelled correctly or use less or different keywords</p>
-                    <a href="http://127.0.0.1:8000/" class="btn btn-primary" role="button">Home</a></a></article>
-                    <!-- <a href="http://127.0.0.1:8000/">&lt; Head back to our main page</a></article> -->
+                    <a href="http://127.0.0.1:8000/" class="btn btn-primary" role="button">Home</a>
+                    </article>
                 </div>
                 <div class="clear"></div>
             </div>

@@ -115,6 +115,11 @@ ul ol {
   margin-bottom: 0;
 }
 
+.ft {
+  text-align: center; 
+  background-color: green; 
+}
+
 dt {
   font-weight: 700;
 }
@@ -297,6 +302,35 @@ input[type="month"] {
   -webkit-appearance: listbox;
 }
 
+/* from app.css */
+/* .clearfix {
+  clear: both;
+}
+.content {
+  position: relative;
+}
+.bg80 {
+  background: #000;
+  background: rgba(0, 0, 0, .8);
+}
+.pad50, .pad50rs0, .pad50rs25 {
+  padding: 50px;
+}
+.pad50 {
+  padding: 50px;
+}
+*, * ::before, * ::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  background: #000;
+  font-family: helvetica, arial, sans-serif;
+  color: #fff;
+  overflow-y: scroll;
+} */
+/* ending of from app.css */
 textarea {
   overflow: auto;
   resize: vertical;
