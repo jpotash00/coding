@@ -47,7 +47,7 @@ def initialSearch(request):
         sort_dict = sorted(do.items(),key=lambda x: x[1], reverse=True)
         newlist = [str(i[0]) for i in sort_dict] #inserts all songIDs (currently in order by rank) into list for ORM DB Search  
         preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(newlist)])
-        xyz = Songs.objects.filter(pk__in=newlist).values().order_by(preserved)[0:10]
+        xyz = Songs.objects.filter(pk__in=newlist).values().order_by(preserved)
         deta = {0:xyz} #---> original data from DJANGO DB ORM info
         htmlDict = CombineSearch(deta) #--> list of dicts that gets passed to html on render
     return render(request,'add.html', {"htmlDict":htmlDict})
@@ -81,7 +81,8 @@ def songSpotify(request):
             csv_data = csv.reader(open("spotifyAPIDump.csv"))
             for row in csv_data:
                 mycursor.execute("INSERT INTO song_copy(title, artist, genre, released_year, song_key, bpm, camelot,Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
-    return render(request,'spotifySearch.html')
+    return render(request,'test.html')
+    # return render(request,'spotifySearch.html')
 
 def finalSearch(response):   #--> After choosing song it will get sent down here for final query
     match = getHarmonicMatch('11B')#(element from choosen list - 11B temporary)

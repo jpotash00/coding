@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link href="//datatables.net/download/build/nightly/jquery.dataTables.css" rel="stylesheet" type="text/css" />
+      <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
+      <script src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script>
+      <meta charset=utf-8 />
+      <title>DataTables - JS Bin</title>
+      <script>
+      $(document).ready( function () {
+
+    /**/
+
+    // By index
+    $('#example').DataTable();  
+
+
+});
+      </script>
+   </head>
+   <body>
+      <div class="container">
+         <table id="example" class="display" width="100%">
+            <thead>
+               <tr>
+                  <td>Name</td>
+                  <td>Position</td>
+                  <td>Office</td>
+                  <td>Age</td>
+                  <td>Start date</td>
+                  <td class="nosort">Salary</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+            </thead>
+            <tbody>
+               <tr role="row" class="odd">
+                  <td>Ad</td>
+                  <td>Administrator</td>
+                  <td>07/06/2016 11:41:49</td>
+                  <td class="sorting_1">0</td>
+                  <td>28605</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28605" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28605" target="_blank">Edit</a> | <a onclick="deletequeue('Ad','queue_dashboard_ajx.php?action=delete&amp;bucket=28605')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="even">
+                  <td>wkfs</td>
+                  <td>karthik</td>
+                  <td>02/11/2016 06:39:39</td>
+                  <td class="sorting_1">0</td>
+                  <td>28402</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28402" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28402" target="_blank">Edit</a> | <a onclick="deletequeue('wkfs','queue_dashboard_ajx.php?action=delete&amp;bucket=28402')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="odd">
+                  <td>viswas test bucket</td>
+                  <td>Administrator</td>
+                  <td>07/01/2016 12:34:41</td>
+                  <td class="sorting_1">0</td>
+                  <td>28576</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28576" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28576" target="_blank">Edit</a> | <a onclick="deletequeue('viswas test bucket','queue_dashboard_ajx.php?action=delete&amp;bucket=28576')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="even">
+                  <td>testallticket</td>
+                  <td>Administrator</td>
+                  <td>07/15/2016 08:04:32</td>
+                  <td class="sorting_1">0</td>
+                  <td>28661</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28661" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28661" target="_blank">Edit</a> | <a onclick="deletequeue('testallticket','queue_dashboard_ajx.php?action=delete&amp;bucket=28661')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="odd">
+                  <td>test_search</td>
+                  <td>Administrator</td>
+                  <td>07/29/2016 06:48:42</td>
+                  <td class="sorting_1">0</td>
+                  <td>28682</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28682" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28682" target="_blank">Edit</a> | <a onclick="deletequeue('test_search','queue_dashboard_ajx.php?action=delete&amp;bucket=28682')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="even">
+                  <td>test_armed_IR_update</td>
+                  <td>Administrator</td>
+                  <td>08/17/2016 06:44:39</td>
+                  <td class="sorting_1">0</td>
+                  <td>28721</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28721" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28721" target="_blank">Edit</a> | <a onclick="deletequeue('test_armed_IR_update','queue_dashboard_ajx.php?action=delete&amp;bucket=28721')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="odd">
+                  <td>test_anand_sr_and_cr</td>
+                  <td>Administrator</td>
+                  <td>07/29/2016 06:29:13</td>
+                  <td class="sorting_1">0</td>
+                  <td>28680</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28680" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28680" target="_blank">Edit</a> | <a onclick="deletequeue('test_anand_sr_and_cr','queue_dashboard_ajx.php?action=delete&amp;bucket=28680')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="even">
+                  <td>test_anand</td>
+                  <td>Administrator</td>
+                  <td>07/14/2016 07:32:24</td>
+                  <td class="sorting_1">0</td>
+                  <td>28660</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28660" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28660" target="_blank">Edit</a> | <a onclick="deletequeue('test_anand','queue_dashboard_ajx.php?action=delete&amp;bucket=28660')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="odd">
+                  <td>test date filter</td>
+                  <td>Administrator</td>
+                  <td>07/06/2016 11:34:24</td>
+                  <td class="sorting_1">0</td>
+                  <td>28604</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28604" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28604" target="_blank">Edit</a> | <a onclick="deletequeue('test date filter','queue_dashboard_ajx.php?action=delete&amp;bucket=28604')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="even">
+                  <td>test 1550</td>
+                  <td>Administrator</td>
+                  <td>08/17/2016 08:56:26</td>
+                  <td class="sorting_1">0</td>
+                  <td>28722</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28722" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28722" target="_blank">Edit</a> | <a onclick="deletequeue('test 1550','queue_dashboard_ajx.php?action=delete&amp;bucket=28722')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="odd">
+                  <td>test 1</td>
+                  <td>Administrator</td>
+                  <td>06/17/2016 03:35:05</td>
+                  <td class="sorting_1">0</td>
+                  <td>28541</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28541" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28541" target="_blank">Edit</a> | <a onclick="deletequeue('test 1','queue_dashboard_ajx.php?action=delete&amp;bucket=28541')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr role="row" class="even">
+                  <td>test</td>
+                  <td>Administrator</td>
+                  <td>06/13/2016 11:30:45</td>
+                  <td class="sorting_1">0</td>
+                  <td>28521</td>
+                  <td><a href="queue_dashboard_bucket_view.php?bucketid=28521" target="_blank">View</a>&nbsp; | <a href="globalsearch.php?queue=28521" target="_blank">Edit</a> | <a onclick="deletequeue('test','queue_dashboard_ajx.php?action=delete&amp;bucket=28521')" href="javascript:void(0);">Delete</a>&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </body>
+</html>
