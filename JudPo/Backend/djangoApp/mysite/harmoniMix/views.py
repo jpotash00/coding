@@ -49,30 +49,63 @@ def initialSearch(request):
         preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(newlist)])
         xyz = Songs.objects.filter(pk__in=newlist).values().order_by(preserved)
         deta = {0:xyz} #---> original data from DJANGO DB ORM info
-        htmlDict = CombineSearch(deta) #--> list of dicts that gets passed to html on render
+        htmlDict = CombineSearch(deta,searching) #--> list of dicts that gets passed to html on render
+    elif (request.method == 'GET'):
+        value = request.GET.get('search')
+        if("by" in value):
+            value = value.casefold()
+            newStr = value.split(" ")
+            newStr.remove("by")
+            value = newStr #--> for initial dict
+            newStr = ",".join(newStr)
+            searching = newStr #--->  for spotifyToCSV
+        else:
+            value = value.casefold()
+            newstr = value.split() #--> for inital dict
+            searching = value #---> for spotifyToCSV
+            value = newstr
+        mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")  #---->Initial database search to get a list of all the titles and artist as one string
+        rez = mycursor.fetchall()
+        data = list(rez)
+        pp = [] #---> for spotify
+        for d in rez:
+            pp.append(list(d)[0])
+        song_dict = {}
+        dict_organizer = {}
+        intArr = np.zeros(len(data)).astype('int') #initializing numpy array full of 0's of len data
+        sd = dictCreator(data, song_dict)  #puts everything in dictionary of {word:song_id}
+        strNum = highestRankID1(value,sd,intArr) #  #---->gets list of songID's most related to the output from server-side form input not in order (unnecessart)
+        if (len(strNum) == 0): #---> empty
+            return error(request)
+        do = getSongIDList(-1,intArr,dict_organizer)
+        sort_dict = sorted(do.items(),key=lambda x: x[1], reverse=True)
+        newlist = [str(i[0]) for i in sort_dict] #inserts all songIDs (currently in order by rank) into list for ORM DB Search  
+        preserved = Case(*[When(pk=pk, then=pos) for pos, pk in enumerate(newlist)])
+        xyz = Songs.objects.filter(pk__in=newlist).values().order_by(preserved)
+        deta = {0:xyz} #---> original data from DJANGO DB ORM info
+        htmlDict = CombineSearch(deta,searching) 
     return render(request,'add.html', {"htmlDict":htmlDict})
 
 def songSpotify(request):
-    # value = request.POST.get('/song/search/') *****Need to get value from anchor link
-    # print(value)
-    # if("by" in value):
-    #     value = value.casefold()
-    #     newStr = value.split(" ")
-    #     newStr.remove("by")
-    #     value = newStr #--> for initial dict
-    #     newStr = ",".join(newStr)
-    #     searching = newStr #--->  for spotifyToCSV
-    # else:
-    #     value = value.casefold()
-    #     newstr = value.split() #--> for inital dict
-    #     searching = value #---> for spotifyToCSV
-    #     value = newstr
+    value = request.GET.get('search')  #get data from original post??
+    if("by" in value):
+        value = value.casefold()
+        newStr = value.split(" ")
+        newStr.remove("by")
+        # value = newStr #--> for initial dict
+        newStr = ",".join(newStr)
+        searching = newStr #--->  for spotifyToCSV
+    else:
+        value = value.casefold()
+        # newstr = value.split() #--> for inital dict
+        searching = value #---> for spotifyToCSV
+        # value = newstr
     mycursor.execute("select concat(title,' ',artist) AS songID FROM songs")  #---->Initial database search to get a list of all the titles and artist as one string
     rez = mycursor.fetchall()
     pp = [] #---> for spotify
     for d in rez:
         pp.append(list(d)[0])
-    w = SpotifytoDBtoCSV(searching) #---> need to send search from form here somehow???
+    w = SpotifytoDBtoCSV(searching)
     songInDBAlready(pp,w)
     with open("spotifyAPIDump.csv",'r') as filer:
         if getLines(filer) == 0: #shouldn't have to worry about this
@@ -80,9 +113,9 @@ def songSpotify(request):
         else:
             csv_data = csv.reader(open("spotifyAPIDump.csv"))
             for row in csv_data:
-                mycursor.execute("INSERT INTO song_copy(title, artist, genre, released_year, song_key, bpm, camelot,Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)   
-    return render(request,'test.html')
-    # return render(request,'spotifySearch.html')
+                mycursor.execute("INSERT INTO songs(title, artist, genre, released_year, song_key, bpm, camelot,Instrumental_type) VALUES (%s ,%s, %s, %s, %s, %s, %s, %s)", row)  
+    dict = {"s": searching} 
+    return render(request,'spotifySearch.html', {"dict": dict})
 
 def finalSearch(response):   #--> After choosing song it will get sent down here for final query
     match = getHarmonicMatch('11B')#(element from choosen list - 11B temporary)

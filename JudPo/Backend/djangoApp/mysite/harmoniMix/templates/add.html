@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="{% static 'css/databaseTable.css' %}">
         <script src="{% static 'js/jquery.dataTables.min.js' %}"></script>
         <script src="{% static 'js/jquery-1.9.1.min.js' %}"></script>
-        <script src="http://localhost:35729/livereload.js"></script>
+        <!-- <script src="http://localhost:35729/livereload.js"></script> -->
         <!-- <script src="http://code.jquery.com/jquery-1.9.1.min.js"></script>
         <script src="http://cdn.datatables.net/1.10.12/js/jquery.dataTables.min.js"></script> -->
         <meta charset=utf-8 />
@@ -102,12 +102,10 @@
                                                 <td>{{songer.released_year}}</td>
                                             </tr>
                                             {% endfor %}
-                                            <!-- <tr>
-                                                <td><a href='spotChecker/'><strong>Click here, if song isn't there!!!</strong></a></td>
-                                            </tr>
                                             <tr>
-                                                <td><a href='song/final/'><strong>Found what you're looking for</strong></a></td>
-                                            </tr> -->
+                                                <td><a href= 'spotChecker/?search={{ htmlDict.8.soSpot }}'><strong>Click here, if song isn't there!!!</strong></a></td>
+                                                <!-- <td><a href= "{% url 'SongSpotify' %}"><strong>Click here, if song isn't there!!!</strong></a></td> {{htmlDict.8.soSpot}} -->
+                                            </tr>
                                         </tbody>
                                         <tfoot>
                                             <tr>

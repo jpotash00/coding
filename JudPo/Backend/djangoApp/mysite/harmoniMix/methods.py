@@ -458,7 +458,7 @@ def getDistinctGenre(dict):
     newlist = sorted(outerList, key=lambda d: d['genre']) 
     return newlist
 
-def CombineSearch(dict):
+def CombineSearch(dict, spotSong):
     newDict = {}
     newDict = dict
     
@@ -472,4 +472,5 @@ def CombineSearch(dict):
     newDict[5] = getDistinctSongKey(dict)
     newDict[6] = getDistinctGenre(dict)
     newDict[7] = {"length":len(dict[0])}
+    newDict[8] = {"soSpot": spotSong}
     return newDict
