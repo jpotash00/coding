@@ -474,3 +474,20 @@ def CombineSearch(dict, spotSong):
     newDict[7] = {"length":len(dict[0])}
     newDict[8] = {"soSpot": spotSong}
     return newDict
+
+
+def CombineSearch1(dict):
+    newDict = {}
+    newDict = dict
+    
+    x = dict[0]
+    newlist = sorted(x, key=lambda d: d['title'])
+    newDict[1] = newlist
+    
+    newDict[2] = getDistinctArtist(dict)
+    newDict[3] = getDistinctBPM(dict)
+    newDict[4] = getDistinctCamelot(dict)
+    newDict[5] = getDistinctSongKey(dict)
+    newDict[6] = getDistinctGenre(dict)
+    newDict[7] = {"length":len(dict[0])}
+    return newDict

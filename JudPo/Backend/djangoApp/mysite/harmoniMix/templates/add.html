@@ -49,7 +49,7 @@
                                     <div id="dt-filter-select_filter" class="dataTables_filter">
                                         <form class="d-flex d-inline-block w-150 flex-column flex-lg-row justify-content-center" action="#" method="POST" pattern=".*S/.*">
                                             {% csrf_token %}
-                                            <input class="form-control mb2 mr-sm-2 transparent-bg" id="FormInputSong" required="required" name="song" placeholder="Search For Songs" type="text">
+                                            <input class="form-control mb2 mr-sm-2 transparent-bg" id="FormInputSong" required="required" name="song" placeholder="Search For Base Songs" type="text">
                                                 <div pseudo="placeholder"></div>
                                                 <div contenteditable="plaintext-only"></div>
                                             </input>
@@ -91,15 +91,16 @@
                                         <tbody>
                                             {% csrf_token %}
                                             {% for songer in htmlDict.0 %}
-                                            <tr class="odd" role="row" data-href='song/final/'>
+                                            <tr class="odd" role="row">
                                             <!-- <tr role="row" class="odd" href='song/final/'>!-->
-                                                <td class="sorting_1">{{songer.title}}</td>
-                                                <td>{{songer.artist}}</td>
-                                                <td>{{songer.bpm}}</td>
-                                                <td>{{songer.camelot}}</td>
-                                                <td>{{songer.song_key}}</td>
-                                                <td>{{songer.genre}}</td>
-                                                <td>{{songer.released_year}}</td>
+                                                <td class="sorting_1"><a href='song/search/?camelot={{ songer.camelot }}'>{{songer.title}}</a></td>
+                                                <td><a href='song/search/?camelot={{ songer.camelot }}'>{{songer.artist}}</a></td>
+                                                <td><a href='song/search/?camelot={{ songer.camelot }}'>{{songer.bpm}}</a></td>
+                                                <td><a href='song/search/?camelot={{ songer.camelot }}'>{{songer.camelot}}</a></td>
+                                                <td><a href='song/search/?camelot={{ songer.camelot }}'>{{songer.song_key}}</a></td>
+                                                <td><a href='song/search/?camelot={{ songer.camelot }}'>{{songer.genre}}</a></td>
+                                                <td><a href='song/search/?camelot={{ songer.camelot }}'>{{songer.released_year}}</a></td>
+                                                <!-- <a href= 'song/final/?camelot={{ songer.camelot }}'></a> -->
                                             </tr>
                                             {% endfor %}
                                             <tr>
