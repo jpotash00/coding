@@ -34,3 +34,50 @@ Nice to have: Being able to create your list of songs for mashup in house. Havin
   - User can view list of songs harmonically matching to chosen base song
 - Stream3: Adding to Song List For Songs Not in DB on Base Song List Search
   - User can click a button that pulls data from spotify
+
+### 3. Navigation
+
+*Tab Navigation* (Tab to Screen)
+- Base Song Search
+
+*Flow Navigation* (Screen to Screen)
+
+- Landing Search Page
+  - => Stream1
+- Stream1: Base Song List
+  - => Stream2
+  - => Stream3
+- Stream2: Pull Data From Spotify & Insert Into Database
+  - => Stream1
+- Stream3: Harmonic Song List
+  - => Stream1
+
+## Schema
+### Models
+
+Songs
+
+| Property     | Type       | Description                         |
+| -------------| -----------| ----------------------------------- |
+| song_id      | int        | unique id for song                  |
+| title        | String     | name of song                        |
+| artist       | String     | name of who wrote song              |
+| genre        | String     | type of music song is               |
+| released_year| int        | year song was released              |
+| song_key     | String     | major musical note in song          |
+| bpm          | int        | how fast/rhythmic the song is       |
+| camelot      | String     | value of song_key based on wheel    |
+| Instrumental_type| String | whether song is an instrumental or not|
+| ranked      | int         | rank given based on search          |
+
+### Networking
+
+- Landing Page/Main Search Screen
+- Stream1: Base Song List
+  - (POST) Query "songlist" based on post value
+- Stream2: Pull Data From Spotify & Insert Into Database
+  - (Read/GET) Value from POST above
+  - (POST) Query "spotify" based on retrieved value, inserted into database, and then search rerun  
+- Stream3: Harmonic Song List
+  - (Read/GET) Value from table row and Query "songlist" where camelot is row's camelot
+  - (POST) Query "songlist" based on post value
